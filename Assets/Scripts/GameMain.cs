@@ -7,6 +7,7 @@ public class GameMain : MonoBehaviour {
     [SerializeField] private GameObject player = null;
     [SerializeField] InputControl _input = null;
     //[SerializeField] EnemyCreation _enemyCreation = null;
+    private HandleGroundMove _playerMove;
 
     void Awake() {
         //var levelManager = LevelManager.GetInstance();
@@ -33,19 +34,21 @@ public class GameMain : MonoBehaviour {
         GroundController controller = player.GetComponent<GroundController>();
         controller.Initalize();
 
-        HandleGroundMove handleMove = new HandleGroundMove(controller);
-        handleMove.Initalize();
+        _playerMove = new HandleGroundMove(controller, 1.5f, 2.5f, 6f);
+        _playerMove.Initalize();
 
         PlayerFSM playerFSM = player.GetComponent<PlayerFSM>();
         playerFSM.Initalize();
 
-        _input.Initalize(playerFSM, handleMove);
+        _input.Initalize(playerFSM, _playerMove);
     }
 
     void Update() {
         //_enemyCreation.Progress();
         _input.Progress();
-        //_player.Progress();
+        _playerMove.Progress();
+
+        CollisionManager.GetInstance().Progress();
         //_particleManager.Progress();
     }
 

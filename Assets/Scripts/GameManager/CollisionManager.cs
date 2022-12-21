@@ -56,15 +56,18 @@ namespace CustomPhysics {
         public void AddCollider(CustomCollider collider) {
             _colliders.Add(collider);
         }
+
         public void ClearTileColliders() {
             _tileColliders.Clear();
         }
+
         public void AddTileCollider(Vector2[] points) {
             PolygonCollider collider = new GameObject().AddComponent<PolygonCollider>();
             collider.Layer = ColliderLayerMask.Ground;
             collider.Initalize(points);
             _tileColliders.Add(collider);
         }
+
         public bool IsCollision(Polygon p1, Vector2 p1Pos, Polygon p2, Vector2 p2Pos) {
             int p1Length = p1.points.Length;
             int p2Length = p2.points.Length;

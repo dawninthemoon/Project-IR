@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandleGroundMove : ISetupable {
+public class HandleGroundMove : ISetupable, ILoopable {
     private float _maxJumpHeight;
 	private float _minJumpHeight;
-	private float _timeToJumpApex;
+	private static readonly float _timeToJumpApex = 0.4f;
     private float _moveSpeed;
 
     private Vector3 _velocity;
@@ -17,8 +17,11 @@ public class HandleGroundMove : ISetupable {
     private GroundController _controller;
 	public Vector3 Velocity { get { return _velocity; } }
 
-    public HandleGroundMove(GroundController controller) {
+    public HandleGroundMove(GroundController controller, float minJump, float maxJump, float speed) {
         _controller = controller;
+        _minJumpHeight = minJump;
+        _maxJumpHeight = maxJump;
+        _moveSpeed = speed;
     }
 
     public void Initalize() {

@@ -6,15 +6,15 @@ using UnityEngine.U2D;
 public class SpriteAtlasAnimator {
     public delegate void OnAnimationEnd();
     static readonly float _defaultSpeed = 0.06f;
-    float _animatonSpeed;
-    string _prefix;
-    float _indexTimer = 0f;
-    int _spriteIndex = 1;
-    string _animationName;
-    bool _loop;
+    private float _animatonSpeed;
+    private string _prefix;
+    private float _indexTimer = 0f;
+    private int _spriteIndex = 1;
+    private string _animationName;
+    private bool _loop;
     public int SpriteIndex { set { _spriteIndex = value; } get { return _spriteIndex; } }
-    OnAnimationEnd _animationEndCallback;
-    SpriteRenderer _renderer;
+    private OnAnimationEnd _animationEndCallback;
+    private SpriteRenderer _renderer;
 
     public SpriteAtlasAnimator(SpriteRenderer renderer, string prefix, string idleStateName, bool loop = false, float speed = 1f) {
         _renderer = renderer;

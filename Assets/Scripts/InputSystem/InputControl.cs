@@ -42,26 +42,26 @@ public class InputControl : MonoBehaviour, ILoopable
     private void InitKeyActions() {
         _actions = new InputActions();
 
-        _actions.Left.AddDefaultBinding(Key.LeftArrow);
+        _actions.Left.AddDefaultBinding(Key.A);
         _actions.Left.AddDefaultBinding(InputControlType.DPadLeft);
         _actions.Left.AddDefaultBinding(InputControlType.LeftStickLeft);
 
-        _actions.Right.AddDefaultBinding(Key.RightArrow);
+        _actions.Right.AddDefaultBinding(Key.D);
         _actions.Right.AddDefaultBinding(InputControlType.DPadRight);
         _actions.Right.AddDefaultBinding(InputControlType.LeftStickRight);
 
-        _actions.Up.AddDefaultBinding(Key.UpArrow);
+        _actions.Up.AddDefaultBinding(Key.W);
         _actions.Up.AddDefaultBinding(InputControlType.DPadUp);
         _actions.Up.AddDefaultBinding(InputControlType.LeftStickUp);
 
-        _actions.Down.AddDefaultBinding(Key.DownArrow);
+        _actions.Down.AddDefaultBinding(Key.S);
         _actions.Down.AddDefaultBinding(InputControlType.DPadDown);
         _actions.Down.AddDefaultBinding(InputControlType.LeftStickDown);
 
-        _actions.Jump.AddDefaultBinding(Key.Z);
+        _actions.Jump.AddDefaultBinding(Key.Space);
         _actions.Jump.AddDefaultBinding(InputControlType.Action1);
 
-        _actions.Attack.AddDefaultBinding(Key.X);
+        _actions.Attack.AddDefaultBinding(Mouse.LeftButton);
         _actions.Attack.AddDefaultBinding(InputControlType.Action3);
 
         _actions.Throw.AddDefaultBinding(Key.A);
