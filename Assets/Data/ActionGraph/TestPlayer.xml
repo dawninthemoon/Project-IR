@@ -1,0 +1,34 @@
+<ActionGraph Name="TestPlayer" DefaultAction="Idle" DefaultFramePerSecond="12">
+
+    <Idle MovementType="FrameEvent" DirectionType="Keep">
+        <Animation Path="Resources/Sprites/TestPlayer/Idle">
+            <FrameEvent Type="Movement" StartFrame="0" Friction="6" MaxVelocity="1.5" Speed="0"/>
+        </Animation>
+
+        <Branch Key="getKey_Jump == true" Condition="OnGround == true" Execute="Jump"/>
+        <Branch Condition="ActionTest" Execute="Move"/>
+        <Branch Condition="End" Execute="Idle"/>
+    </Idle>
+
+    <Move MovementType="FrameEvent" DirectionType="MoveInput">
+        <Animation Path="Resources/Sprites/TestPlayer/Move">
+            <FrameEvent Type="Movement" StartFrame="0" Friction="0" MaxVelocity="2.5" Speed="20"/>
+        </Animation>
+
+        <Branch Key="getKey_Jump == true" Condition="OnGround == true" Execute="Jump"/>
+        <Branch Condition="ActionTest == false" Execute="Idle"/>
+        <Branch Condition="End" Execute="Move"/>
+    </Move>
+
+    <Jump MovementType="FrameEvent" DirectionType="MoveInput">
+        <Animation Path="Resources/Sprites/TestPlayer/Move">
+            <FrameEvent Type="Jump" StartFrame="0" EndFrame="1" Power="3"/>
+
+        </Animation>
+
+        <Branch Condition="End == true" Execute="Jump"/>
+        <Branch Key="getKey_Jump == false" Condition="ActionTest == true" Execute="Move"/>
+        <Branch Key="getKey_Jump == false" Condition="ActionTest == false" Execute="Idle"/>
+    </Jump>
+
+</ActionGraph>

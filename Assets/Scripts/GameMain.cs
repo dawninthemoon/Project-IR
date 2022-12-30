@@ -4,7 +4,7 @@ using UnityEngine;
 using CustomPhysics;
 
 public class GameMain : MonoBehaviour {
-    [SerializeField] private GameObject player = null;
+    [SerializeField] private GameEntityBase player = null;
     [SerializeField] InputControl _input = null;
     //[SerializeField] EnemyCreation _enemyCreation = null;
     private HandleGroundMove _playerMove;
@@ -15,6 +15,8 @@ public class GameMain : MonoBehaviour {
         //AssetManager.GetInstance().Initalize();
         CollisionManager.GetInstance().Initalize();
         
+        player.Assign();
+
         /*
         levelManager.Initalize();
         //_enemyCreation.Initalize();
@@ -30,26 +32,19 @@ public class GameMain : MonoBehaviour {
         levelManager.LoadLevel(levelManager.CurrentLevelName);*/
     }
 
-    void Start() {
-        GroundController controller = player.GetComponent<GroundController>();
-        controller.Initalize();
+    void Start() 
+    {
+        
+        player.Initialize();
 
-        _playerMove = new HandleGroundMove(controller, 1.5f, 2.5f, 6f);
-        _playerMove.Initalize();
-
-        PlayerFSM playerFSM = player.GetComponent<PlayerFSM>();
-        playerFSM.Initalize();
-
-        _input.Initalize(playerFSM, _playerMove);
     }
 
     void Update() {
-        //_enemyCreation.Progress();
-        _input.Progress();
-        _playerMove.Progress();
+        ActionKeyInputManager.GetInstance().progress(Time.deltaTime);
+
+        player.Progress(Time.deltaTime);
 
         CollisionManager.GetInstance().Progress();
-        //_particleManager.Progress();
     }
 
     void LateUpdate() {
