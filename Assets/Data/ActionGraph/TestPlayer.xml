@@ -10,7 +10,7 @@
         <Branch Condition="End" Execute="Idle"/>
     </Idle>
 
-    <Move MovementType="FrameEvent" DirectionType="MoveInput">
+    <Move MovementType="FrameEvent" DirectionType="MoveInputHorizontal">
         <Animation Path="Resources/Sprites/TestPlayer/Move">
             <FrameEvent Type="Movement" StartFrame="0" Friction="0" MaxVelocity="2.5" Speed="20"/>
         </Animation>
@@ -20,7 +20,7 @@
         <Branch Condition="End" Execute="Move"/>
     </Move>
 
-    <Jump MovementType="FrameEvent" DirectionType="MoveInput">
+    <Jump MovementType="FrameEvent" DirectionType="MoveInputHorizontal">
         <Animation Path="Resources/Sprites/TestPlayer/Move">
             <FrameEvent Type="Jump" StartFrame="0" EndFrame="1" Power="3"/>
 

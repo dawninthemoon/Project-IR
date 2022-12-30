@@ -184,6 +184,8 @@ public class GameEntityBase : MonoBehaviour
             case DirectionType.Keep:
                 break;
             case DirectionType.MoveInput:
+            case DirectionType.MoveInputHorizontal:
+            {
                 Vector3 input = ControllerEx.GetInstance().GetJoystickAxis();
                 if(MathEx.equals(input.sqrMagnitude,0f,float.Epsilon) == false )
                 {
@@ -195,7 +197,10 @@ public class GameEntityBase : MonoBehaviour
                     direction = Vector3.zero;
                 }
 
-                break;
+                if(directionType == DirectionType.MoveInputHorizontal)
+                    direction.y = 0f;
+            }
+            break;
             case DirectionType.MousePoint:
                 direction = ControllerEx.GetInstance().getJoystickAxisR(transform.position);
                 break;

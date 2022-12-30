@@ -72,6 +72,7 @@ public enum DirectionType
     AlwaysRight = 0,
     Keep,
     MoveInput,
+    MoveInputHorizontal,
     MousePoint,
     AttackedPoint,
     MoveDirection,
