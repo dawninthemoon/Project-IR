@@ -12,7 +12,7 @@
     />
 
     <AttackCharge
-        PressType="KeyPressed"
+        PressType="KeyDown"
         MultiInputType="Single"
         Threshold="0.0"
         
@@ -48,8 +48,6 @@
         
         Key_KM="Space"
     />
-
-    
 
     <EditorHotKey_EditorOnOff
         PressType="KeyDown"

@@ -73,6 +73,9 @@ public class ActionKeyInputManager : Singleton<ActionKeyInputManager>
                 case ActionKeyMultiInputType.Single:
                     check = singleInputCheck(presetData);
                     break;
+                case ActionKeyMultiInputType.Or:
+                    check = multiInputCheck(presetData);
+                    break;
                 case ActionKeyMultiInputType.SameTime:
                     check = sameTimeInputCheck(deltaTime,item,presetData);
                     break;
@@ -119,6 +122,43 @@ public class ActionKeyInputManager : Singleton<ActionKeyInputManager>
         return _actionKeyInputData[keyName]._isValid;
     }
 
+    private bool multiInputCheck(ActionKeyPresetData presetData)
+    {
+        int controllerType = (int)ControllerEx.GetInstance().getCurrentControllerType();
+        switch(presetData._pressType)
+        {
+            case ActionKeyPressType.KeyDown:
+            {
+                for(int i = 0; i < presetData._keyCount[controllerType]; ++i)
+                {
+                    if(ControllerEx.GetInstance().KeyDown(getKeyCode(i,presetData)))
+                        return true;
+                }
+            }
+            break;
+            case ActionKeyPressType.KeyPressed:
+            {
+                for(int i = 0; i < presetData._keyCount[controllerType]; ++i)
+                {
+                    if(ControllerEx.GetInstance().KeyPress(getKeyCode(i,presetData)))
+                        return true;
+                }
+            }
+            break;
+            case ActionKeyPressType.KeyUp:
+            {
+                for(int i = 0; i < presetData._keyCount[controllerType]; ++i)
+                {
+                    if(ControllerEx.GetInstance().KeyUp(getKeyCode(i,presetData)))
+                        return true;
+                }
+            }
+            break;
+        }
+
+        return false;
+    }
+
     private bool sameTimeInputCheck(float deltaTime, ActionKeyInputData inputData, ActionKeyPresetData presetData)
     {
         inputData._thresholdTime += deltaTime;
@@ -141,7 +181,6 @@ public class ActionKeyInputManager : Singleton<ActionKeyInputManager>
 
                 inputData._thresholdTime = presetData._multiInputThreshold;
 
-                Debug.Log("222");
                 return true;
             }
             case ActionKeyPressType.KeyUp:

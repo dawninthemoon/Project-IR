@@ -320,6 +320,11 @@ public class GameEntityBase : MonoBehaviour
 
         return _spriteRenderer.transform;
     }
+
+    public bool applyFrameTag(string tag) {return _actionGraph.applyFrameTag(tag);}
+    public void deleteFrameTag(string tag) {_actionGraph.deleteFrameTag(tag);}
+    public bool checkFrameTag(string tag) {return _actionGraph.checkFrameTag(tag);}
+    
     public Vector3 getDirection() {return _direction;}
     public MovementBase getCurrentMovement() {return _movementControl.getCurrentMovement();}
     public MovementControl getMovementControl(){return _movementControl;}

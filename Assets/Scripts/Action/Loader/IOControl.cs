@@ -188,9 +188,6 @@ public static class IOControl {
 			path = path.Substring(0,path.LastIndexOf('/'));
 		}
 
-		Debug.Log(path);
-		Debug.Log(str);
-
 		return Path.Combine(path,str);
 	}
 }

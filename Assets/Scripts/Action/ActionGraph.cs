@@ -51,6 +51,7 @@ public class ActionGraph
     {
         bool isEnd = _animationPlayer.progress(deltaTime, targetEntity);
         _animationPlayer.processMultiSelectAnimation(this);
+
         setActionConditionData_Bool(ConditionNodeUpdateType.Action_AnimationEnd,isEnd);
     }
 

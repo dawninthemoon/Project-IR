@@ -518,9 +518,9 @@ MonoBehaviour:
   _colliderLayer: 3
   _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
   _rect:
-    position: {x: 0, y: -0.5}
-    width: 1
-    height: 1
+    position: {x: 0, y: -0.23}
+    width: 0.5
+    height: 0.7
     rotation: 0
 --- !u!212 &1526846291
 SpriteRenderer:

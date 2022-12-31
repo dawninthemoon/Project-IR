@@ -11,6 +11,7 @@ public enum ActionKeyPressType
 public enum ActionKeyMultiInputType
 {
     Single = 0,
+    Or,
     SameTime,
     Count
 }

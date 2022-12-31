@@ -234,18 +234,12 @@ public class ActionFrameEvent_SetFrameTag : ActionFrameEventBase
 
     public override bool onExecute(GameEntityBase executeEntity, GameEntityBase targetEntity = null)
     {
-        GameEntityBase requester = (GameEntityBase)executeEntity;
-        
-        return true;
-        //return requester.applyFrameTag(_frameTag);
+        return executeEntity.applyFrameTag(_frameTag);
     }
 
     public override void onExit(GameEntityBase executeEntity)
     {
-        GameEntityBase requester = (GameEntityBase)executeEntity;
-        
-        //requester.deleteFrameTag(_frameTag);
-
+        executeEntity.deleteFrameTag(_frameTag);
     }
 
     public override void loadFromXML(XmlNode node)
