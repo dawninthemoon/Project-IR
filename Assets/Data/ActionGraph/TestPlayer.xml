@@ -1,4 +1,4 @@
-<ActionGraph Name="TestPlayer" DefaultAction="Idle" DefaultFramePerSecond="6">
+<ActionGraph Name="TestPlayer" DefaultAction="Idle" DefaultFramePerSecond="12">
 
     <BranchSet Name="MoveBranchSet">
         <Branch Condition="(End == true) && (ActionTest == true)" Execute="Move"/>
@@ -6,7 +6,7 @@
     </BranchSet>
 
     <Idle MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
-        <Animation Path="Resources/Sprites/TestPlayer/Idle" XFlip="True">
+        <Animation Path="Resources/Sprites/TestPlayer/Idle" FramePerSecond="8.3" XFlip="True">
             <FrameEvent Type="Movement" StartFrame="0" Friction="6" MaxVelocity="1.5" Speed="0"/>
         </Animation>
 
@@ -44,7 +44,7 @@
 
 
     <AttackCombo_0 MovementType="FrameEvent" DirectionType="MousePointHorizontal" DirectionUpdateOnce="True" FlipType="Direction">
-        <Animation Path="Resources/Sprites/TestPlayer/Attack/0" XFlip="True">
+        <Animation Path="Resources/Sprites/TestPlayer/Attack/0" FramePerSecond="6" XFlip="True">
             <FrameEvent Type="Movement" StartFrame="0" Friction="6" MaxVelocity="2" Velocity="2" Speed="0"/>
 
             <FrameEvent Type="FrameTag" StartFrame="0.5" EndFrame="2" Tag="AttackCancle"/>
@@ -55,7 +55,7 @@
     </AttackCombo_0>
 
     <AttackCombo_1 MovementType="FrameEvent" DirectionType="MousePointHorizontal" DirectionUpdateOnce="True" FlipType="Direction">
-        <Animation Path="Resources/Sprites/TestPlayer/Attack/1" XFlip="True">
+        <Animation Path="Resources/Sprites/TestPlayer/Attack/1" FramePerSecond="6" XFlip="True">
             <FrameEvent Type="Movement" StartFrame="0" Friction="6" MaxVelocity="2" Velocity="2" Speed="0"/>
 
             <FrameEvent Type="FrameTag" StartFrame="0.5" EndFrame="2" Tag="AttackCancle"/>
@@ -66,7 +66,7 @@
     </AttackCombo_1>
 
     <AttackCombo_2 MovementType="FrameEvent" DirectionType="MousePointHorizontal" DirectionUpdateOnce="True" FlipType="Direction">
-        <Animation Path="Resources/Sprites/TestPlayer/Attack/2" XFlip="True">
+        <Animation Path="Resources/Sprites/TestPlayer/Attack/2" FramePerSecond="6" XFlip="True">
             <FrameEvent Type="Movement" StartFrame="0" Friction="6" MaxVelocity="2" Velocity="2" Speed="0"/>
 
             <FrameEvent Type="FrameTag" StartFrame="0.5" EndFrame="2" Tag="AttackCancle"/>
