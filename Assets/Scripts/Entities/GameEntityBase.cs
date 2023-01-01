@@ -198,12 +198,24 @@ public class GameEntityBase : MonoBehaviour
                 }
 
                 if(directionType == DirectionType.MoveInputHorizontal)
+                {
                     direction.y = 0f;
+                    direction.Normalize();
+                }
             }
             break;
             case DirectionType.MousePoint:
+            case DirectionType.MousePointHorizontal:
+            {
                 direction = ControllerEx.GetInstance().getJoystickAxisR(transform.position);
-                break;
+
+                if(directionType == DirectionType.MousePointHorizontal)
+                {
+                    direction.y = 0f;
+                    direction.Normalize();
+                }
+            }
+            break;
             case DirectionType.AttackedPoint:
                 direction = (_recentlyAttackPoint - transform.position).normalized;
                 break;

@@ -74,6 +74,7 @@ public enum DirectionType
     MoveInput,
     MoveInputHorizontal,
     MousePoint,
+    MousePointHorizontal,
     AttackedPoint,
     MoveDirection,
     AI,
