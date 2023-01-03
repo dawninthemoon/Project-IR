@@ -54,6 +54,11 @@ public static class MathEx
 		return Vector3.Angle(direction,resultDirection) > 100f ? target : result;
 	}
 
+	public static Vector3 changeVectorDirection(Vector3 targetVector, Vector3 targetDirection)
+	{
+		return targetDirection * targetVector.magnitude;
+	}
+
     public static float convergence0(float value, float a)
     {
         if(equals(value,0f,float.Epsilon))

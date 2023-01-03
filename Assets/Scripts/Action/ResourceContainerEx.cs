@@ -8,25 +8,33 @@ public class ResourceContainerEx : Singleton<ResourceContainerEx>
     private Dictionary<string ,Sprite> sprite = new Dictionary<string, Sprite>();
 	private Dictionary<string ,Sprite[]> spriteSet = new Dictionary<string, Sprite[]>();
 
+	private Dictionary<string ,ScriptableObject> _scriptableObject = new Dictionary<string, ScriptableObject>();
+
 	private static string spritesFilePath = "Sprites/";
+	private static string scriptableFilePath = "ScriptableObject/";
 
 	private static Type _spriteType = typeof(Sprite);
 	private static Type _scriptableType = typeof(ScriptableObject);
 
 	public ScriptableObject GetScriptableObject(string fileName)
 	{
-		if(Load(fileName, _scriptableType) != null)
+		if(_scriptableObject.ContainsKey(fileName))
+			return _scriptableObject[fileName];
+
+		string path = scriptableFilePath + fileName;
+		if(Load(path, _scriptableType) != null)
 		{
-			if(Load(fileName, _scriptableType) as ScriptableObject == null)
+			if(Load(path, _scriptableType) as ScriptableObject == null)
 				DebugUtil.assert(false, "???");
 		}
 
-		ScriptableObject obj = Load(fileName,_scriptableType) as ScriptableObject;
+		ScriptableObject obj = Load(path,_scriptableType) as ScriptableObject;
 		if(obj == null)
 		{
-            DebugUtil.assert(false, "file does not exist : {0}",fileName);
+            DebugUtil.assert(false, "file does not exist : {0}",path);
 			return null;
 		}
+		_scriptableObject.Add(fileName,obj);
 
 		return obj;
 	}

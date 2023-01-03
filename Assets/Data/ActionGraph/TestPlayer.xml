@@ -1,8 +1,24 @@
-<ActionGraph Name="TestPlayer" DefaultAction="Idle" DefaultFramePerSecond="12">
+<ActionGraph Name="TestPlayer" DefaultAction="Idle" DefaultFramePerSecond="6">
+
+    <GlobalVariable Name="gv_normalSpeed" Value="600.0"/>
+    <GlobalVariable Name="gv_normalFriction" Value="150.0"/>
+    <GlobalVariable Name="gv_normalMaxVelocity" Value="100.0"/>
+    <GlobalVariable Name="gv_normalJumpPower" Value="200.0"/>
+    <GlobalVariable Name="gv_normalAirFriction" Value="100.0"/>
+
+    <GlobalVariable Name="gv_normalAttack1Velocity" Value="50.0"/>
+    <GlobalVariable Name="gv_normalAttack2Velocity" Value="50.0"/>
+    <GlobalVariable Name="gv_normalAttack3Velocity" Value="100.0"/>
+    <GlobalVariable Name="gv_normalAttackFriction" Value="300.0"/>
+
 
     <BranchSet Name="MoveBranchSet">
         <Branch Condition="(End == true) && (ActionTest == true)" Execute="Move"/>
         <Branch Condition="(End == true) && (ActionTest == false)" Execute="Idle"/>
+    </BranchSet>
+
+    <BranchSet Name="FallBranchSet">
+        <Branch Condition="(VelocityY < 0.0)" Execute="FallStart"/>
     </BranchSet>
 
     <Idle MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
@@ -10,42 +26,88 @@
             <FrameEvent Type="Movement" StartFrame="0" Friction="6" MaxVelocity="1.5" Speed="0"/>
         </Animation>
 
+        <UseBranchSet Name="FallBranchSet"/>
+
         <Branch Condition="ActionTest" Execute="Move"/>
 
-        <Branch Key="getKey_Jump == true" Condition="OnGround == true" Execute="Jump"/>
+        <Branch Key="getKey_Jump == true" Condition="OnGround == true" Execute="JumpStart"/>
+        <Branch Key="getKey_DodgeRoll" Condition="ActionTest && OnGround" Execute="DodgeRoll"/>
+
         <Branch Key="getKey_AttackCharge" Execute="AttackCombo_0"/>
         <Branch Condition="End" Execute="Idle"/>
     </Idle>
 
     <Move MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
-        <Animation Path="Resources/Sprites/TestPlayer/Move" XFlip="True">
-            <FrameEvent Type="Movement" StartFrame="0" Friction="0" MaxVelocity="2.5" Speed="20"/>
+        <Animation Path="Resources/Sprites/TestPlayer/Move" FramePerSecond="12" XFlip="True">
+            <FrameEvent Type="Movement" StartFrame="0" Friction="0" MaxVelocity="gv_normalMaxVelocity" Speed="gv_normalSpeed"/>
         </Animation>
+
+        <UseBranchSet Name="FallBranchSet"/>
 
         <Branch Condition="ActionTest == false" Execute="Idle"/>
 
-        <Branch Key="getKey_Jump == true" Condition="OnGround == true" Execute="Jump"/>
+        <Branch Key="getKey_Jump" Condition="OnGround == true" Execute="JumpStart"/>
+        <Branch Key="getKey_DodgeRoll" Condition="ActionTest && OnGround" Execute="DodgeRoll"/>
+
         <Branch Key="getKey_AttackCharge" Execute="AttackCombo_0"/>
         <Branch Condition="End" Execute="Move"/>
     </Move>
 
-    <Jump MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
-        <Animation Path="Resources/Sprites/TestPlayer/Move" XFlip="True">
-            <FrameEvent Type="Jump" StartFrame="0" EndFrame="1" Power="3"/>
-
+    <DodgeRoll MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
+        <Animation Path="Resources/Sprites/TestPlayer/DodgeRoll" FramePerSecond="3" XFlip="True">
+            <FrameEvent Type="Movement" StartFrame="0" Friction="1200" MaxVelocity="400" Velocity="400" Speed="0"/>
+            <FrameEvent Type="FrameTag" StartFrame="0.4" EndFrame="2" Tag="AttackCancle"/>
         </Animation>
 
-        <Branch Key="getKey_AttackCharge" Execute="AttackCombo_0"/>
+        <Branch Key="getKey_AttackCharge" Condition="getFrameTag_AttackCancle" Execute="AttackCombo_0"/>
+        <Branch Condition="End" Execute="Move"/>
+    </DodgeRoll>
 
-        <Branch Condition="End == true" Execute="Jump"/>
-        <Branch Key="getKey_Jump == false" Condition="ActionTest == true" Execute="Move"/>
-        <Branch Key="getKey_Jump == false" Condition="ActionTest == false" Execute="Idle"/>
-    </Jump>
+    <JumpStart MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
+        <Animation Path="Resources/Sprites/TestPlayer/Jump/Start" XFlip="True" FramePerSecond="10">
+            <FrameEvent Type="Jump" StartFrame="1" Power="gv_normalJumpPower"/>
+            <FrameEvent Type="Movement" StartFrame="0" Friction="gv_normalAirFriction" MaxVelocity="gv_normalMaxVelocity" Speed="gv_normalSpeed"/>
+        </Animation>
+
+        <UseBranchSet Name="FallBranchSet"/>
+
+        <Branch Condition="End == true" Execute="JumpLoop"/>
+    </JumpStart>
+
+    <JumpLoop MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
+        <Animation Path="Resources/Sprites/TestPlayer/Jump/Loop" XFlip="True">
+            <FrameEvent Type="Movement" StartFrame="0" Friction="gv_normalAirFriction" MaxVelocity="gv_normalMaxVelocity" Speed="gv_normalSpeed"/>
+        </Animation>
+
+        <UseBranchSet Name="FallBranchSet"/>
+
+        <Branch Condition="End == true" Execute="JumpLoop"/>
+    </JumpLoop>
+
+    <FallStart MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
+        <Animation Path="Resources/Sprites/TestPlayer/Jump/FallStart" XFlip="True">
+            <FrameEvent Type="Movement" StartFrame="0" Friction="gv_normalAirFriction" MaxVelocity="gv_normalMaxVelocity" Speed="gv_normalSpeed"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="FallLoop"/>
+        <Branch Condition="OnGround && (ActionTest == true)" Execute="Move"/>
+        <Branch Condition="OnGround && (ActionTest == false)" Execute="Idle"/>
+    </FallStart>
+
+    <FallLoop MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
+        <Animation Path="Resources/Sprites/TestPlayer/Jump/Fall" XFlip="True">
+            <FrameEvent Type="Movement" StartFrame="0" Friction="gv_normalAirFriction" MaxVelocity="gv_normalMaxVelocity" Speed="gv_normalSpeed"/>
+        </Animation>
+
+        <Branch Condition="End == true" Execute="FallLoop"/>
+        <Branch Condition="OnGround && (ActionTest == true)" Execute="Move"/>
+        <Branch Condition="OnGround && (ActionTest == false)" Execute="Idle"/>
+    </FallLoop>
 
 
     <AttackCombo_0 MovementType="FrameEvent" DirectionType="MousePointHorizontal" DirectionUpdateOnce="True" FlipType="Direction">
         <Animation Path="Resources/Sprites/TestPlayer/Attack/0" FramePerSecond="6" XFlip="True">
-            <FrameEvent Type="Movement" StartFrame="0" Friction="6" MaxVelocity="2" Velocity="2" Speed="0"/>
+            <FrameEvent Type="Movement" StartFrame="0" Friction="gv_normalAttackFriction" MaxVelocity="gv_normalAttack1Velocity" Velocity="gv_normalAttack1Velocity" Speed="0"/>
 
             <FrameEvent Type="FrameTag" StartFrame="0.5" EndFrame="2" Tag="AttackCancle"/>
         </Animation>
@@ -56,7 +118,7 @@
 
     <AttackCombo_1 MovementType="FrameEvent" DirectionType="MousePointHorizontal" DirectionUpdateOnce="True" FlipType="Direction">
         <Animation Path="Resources/Sprites/TestPlayer/Attack/1" FramePerSecond="6" XFlip="True">
-            <FrameEvent Type="Movement" StartFrame="0" Friction="6" MaxVelocity="2" Velocity="2" Speed="0"/>
+            <FrameEvent Type="Movement" StartFrame="0" Friction="gv_normalAttackFriction" MaxVelocity="gv_normalAttack2Velocity" Velocity="gv_normalAttack2Velocity" Speed="0"/>
 
             <FrameEvent Type="FrameTag" StartFrame="0.5" EndFrame="2" Tag="AttackCancle"/>
         </Animation>
@@ -67,7 +129,7 @@
 
     <AttackCombo_2 MovementType="FrameEvent" DirectionType="MousePointHorizontal" DirectionUpdateOnce="True" FlipType="Direction">
         <Animation Path="Resources/Sprites/TestPlayer/Attack/2" FramePerSecond="6" XFlip="True">
-            <FrameEvent Type="Movement" StartFrame="0" Friction="6" MaxVelocity="2" Velocity="2" Speed="0"/>
+            <FrameEvent Type="Movement" StartFrame="0" Friction="gv_normalAttackFriction" MaxVelocity="gv_normalAttack3Velocity" Velocity="gv_normalAttack3Velocity" Speed="0"/>
 
             <FrameEvent Type="FrameTag" StartFrame="0.5" EndFrame="2" Tag="AttackCancle"/>
         </Animation>

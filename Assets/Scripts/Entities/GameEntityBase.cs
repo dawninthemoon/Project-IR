@@ -119,6 +119,8 @@ public class GameEntityBase : MonoBehaviour
         switch(flipType)
         {
             case FlipType.Direction:
+                flipState = _flipState;
+                
                 if(MathEx.abs(_direction.x) != 0f && currentFlipState.xFlip == true)
                     flipState.xFlip = _direction.x < 0;
                 if(MathEx.abs(_direction.y) != 0f && currentFlipState.yFlip == true)

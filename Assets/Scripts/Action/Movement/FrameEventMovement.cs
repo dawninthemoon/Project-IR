@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FrameEventMovement : MovementBase
 {
-    public static readonly float _gravity = -9.8f;
+    public static readonly float _gravity = -400.0f;
 
 
     private GameEntityBase _targetEntity;
@@ -60,10 +60,12 @@ public class FrameEventMovement : MovementBase
         }
 
         _currentDirection = direction;
+
         float resultSpeed = _movementValues[0] + (_movementValues[0] >= 0 ? -_movementValues[3] : _movementValues[3]);
         
         Vector3 moveDelta = (_currentDirection * _movementValues[0]) * deltaTime;
-        _gravityAccumulate += moveDelta.y + _gravity * deltaTime;
+        _gravityAccumulate += _gravity * deltaTime;
+
         _currentVelocity += moveDelta;
 
         Vector3 velocityDirection = _currentVelocity.normalized;
@@ -79,7 +81,8 @@ public class FrameEventMovement : MovementBase
 
         bool onGround = _controller.collisions.above || _controller.collisions.below;
 
-        if (onGround) {
+        if (onGround) 
+        {
 			// if (_controller.collisions.slidingDownMaxSlope) 
             // {
 			// 	_currentVelocity.y += _controller.collisions.slopeNormal.y * -_gravity * Time.deltaTime;
@@ -90,8 +93,10 @@ public class FrameEventMovement : MovementBase
                 _gravityAccumulate = 0f;
 			}
 		}
-        
+
         _targetEntity.getActionGraph().setActionConditionData_Bool(ConditionNodeUpdateType.Action_OnGround, onGround);
+        _targetEntity.getActionGraph().setActionConditionData_Float(ConditionNodeUpdateType.Action_VelocityX, _currentVelocity.x);
+        _targetEntity.getActionGraph().setActionConditionData_Float(ConditionNodeUpdateType.Action_VelocityY, _gravityAccumulate + _currentVelocity.y);
 
         return true;
     }
@@ -134,4 +139,6 @@ public class FrameEventMovement : MovementBase
         _movementValues[valueType] = value;
     }
 
+
+    public override Vector3 getCurrentDirection() {return _currentVelocity.normalized;}
 }

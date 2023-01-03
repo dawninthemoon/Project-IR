@@ -155,6 +155,9 @@ public enum ConditionNodeUpdateType
     Action_IsYFlip,
     Action_CurrentFrame,
     Action_OnGround,
+    Action_VelocityX,
+    Action_VelocityY,
+    
 
     Input_AttackCharge,
     Input_AttackBlood,
@@ -237,6 +240,10 @@ public static class ConditionNodeInfoPreset
         {"IsYFlip",new ConditionNodeInfo(ConditionNodeUpdateType.Action_IsYFlip, ConditionNodeType.Bool)},
         {"CurrentFrame",new ConditionNodeInfo(ConditionNodeUpdateType.Action_CurrentFrame, ConditionNodeType.Float)},
         {"OnGround",new ConditionNodeInfo(ConditionNodeUpdateType.Action_OnGround, ConditionNodeType.Bool)},
+
+        {"VelocityX",new ConditionNodeInfo(ConditionNodeUpdateType.Action_VelocityX, ConditionNodeType.Float)},
+        {"VelocityY",new ConditionNodeInfo(ConditionNodeUpdateType.Action_VelocityY, ConditionNodeType.Float)},
+
 
         {"InputAttackCharge",new ConditionNodeInfo(ConditionNodeUpdateType.Input_AttackCharge, ConditionNodeType.Bool)},
         {"InputAttackBlood",new ConditionNodeInfo(ConditionNodeUpdateType.Input_AttackBlood, ConditionNodeType.Bool)},

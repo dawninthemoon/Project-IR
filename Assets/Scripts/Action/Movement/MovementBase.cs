@@ -62,6 +62,6 @@ public abstract class MovementBase
         _moveScale = moveScale;
     }
 
-    public Vector3 getCurrentDirection() {return _currentDirection;}
+    public virtual Vector3 getCurrentDirection() {return _currentDirection;}
 
 }

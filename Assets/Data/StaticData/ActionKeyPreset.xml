@@ -49,6 +49,14 @@
         Key_KM="Space"
     />
 
+    <DodgeRoll
+        PressType="KeyDown"
+        MultiInputType="Single"
+        Threshold="0.0"
+        
+        Key_KM="F"
+    />
+
     <EditorHotKey_EditorOnOff
         PressType="KeyDown"
         MultiInputType="Single"
