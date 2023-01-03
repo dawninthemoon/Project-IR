@@ -20,7 +20,6 @@ public class InputControl : MonoBehaviour, ILoopable
     }
 
     private HandleGroundMove _handleMove;
-    PlayerFSM _playerFSM;
 
     private InputActions _actions;
     private Dictionary<string, ActionInfo> _wasPressedAtLastFrame;
@@ -29,7 +28,6 @@ public class InputControl : MonoBehaviour, ILoopable
 
     public void Initalize(PlayerFSM playerFSM, HandleGroundMove handleMove) {
         _handleMove = handleMove;
-        _playerFSM = playerFSM;
 
         InitKeyActions();
 

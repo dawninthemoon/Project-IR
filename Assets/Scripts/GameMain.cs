@@ -4,47 +4,47 @@ using UnityEngine;
 using CustomPhysics;
 
 public class GameMain : MonoBehaviour {
-    [SerializeField] private GameObject player = null;
+    [SerializeField] private GameEntityBase player = null;
     [SerializeField] InputControl _input = null;
     //[SerializeField] EnemyCreation _enemyCreation = null;
     private HandleGroundMove _playerMove;
 
     void Awake() {
-        var levelManager = LevelManager.GetInstance();
-        CollisionManager.GetInstance().Initialize();
+        //var levelManager = LevelManager.GetInstance();
+
+        //AssetManager.GetInstance().Initalize();
+        CollisionManager.GetInstance().Initalize();
         
-        levelManager.Initialize();
+        player.Assign();
+
+        /*
+        levelManager.Initalize();
+        //_enemyCreation.Initalize();
 
         EventCommand.SharedData sharedData = new EventCommand.SharedData(
-            player,
+            _player,
             levelManager.TileGrid,
-            levelManager.LevelDictionary
+            levelManager.LevelDictionary,
+            _enemyCreation
         );
         EventManager.GetInstance().Initalize(sharedData);
-        
-        levelManager.LoadLevel(levelManager.CurrentLevelName);
+
+        levelManager.LoadLevel(levelManager.CurrentLevelName);*/
     }
 
-    void Start() {
-        GroundController controller = player.GetComponent<GroundController>();
-        controller.Initialize();
+    void Start() 
+    {
+        
+        player.Initialize();
 
-        _playerMove = new HandleGroundMove(controller, 45f, 65f, 100f);
-        _playerMove.Initialize();
-
-        PlayerFSM playerFSM = player.GetComponent<PlayerFSM>();
-        playerFSM.Initalize();
-
-        _input.Initalize(playerFSM, _playerMove);
     }
 
     void Update() {
-        //_enemyCreation.Progress();
-        _input.Progress();
-        _playerMove.Progress();
+        ActionKeyInputManager.GetInstance().progress(Time.deltaTime);
+
+        player.Progress(Time.deltaTime);
 
         CollisionManager.GetInstance().Progress();
-        //_particleManager.Progress();
     }
 
     void LateUpdate() {

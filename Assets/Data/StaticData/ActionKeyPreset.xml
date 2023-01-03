@@ -1,0 +1,68 @@
+
+<ActionKeyPreset>
+
+    <Dash
+        PressType="KeyDown"
+        MultiInputType="Single"
+        Threshold="0.0"
+        
+        Key_KM="Space"
+        Key_XBOX="A"
+        Key_PS="X"
+    />
+
+    <AttackCharge
+        PressType="KeyDown"
+        MultiInputType="Single"
+        Threshold="0.0"
+        
+        Key_KM="Mouse0"
+        Key_XBOX="RB"
+        Key_PS="X"
+    />
+
+    <Guard
+        PressType="KeyPressed"
+        MultiInputType="Single"
+        Threshold="0.0"
+        
+        Key_KM="Mouse1"
+        Key_XBOX="LB"
+        Key_PS="X"
+    />
+
+    <GuardBreak
+        PressType="KeyDown"
+        MultiInputType="Single"
+        Threshold="0.0"
+        
+        Key_KM="Mouse1"
+        Key_XBOX="LB"
+        Key_PS="X"
+    />
+
+    <Jump
+        PressType="KeyPressed"
+        MultiInputType="Single"
+        Threshold="0.0"
+        
+        Key_KM="Space"
+    />
+
+    <EditorHotKey_EditorOnOff
+        PressType="KeyDown"
+        MultiInputType="Single"
+        Threshold="0.0"
+        
+        Key_KM="Tab"
+    />
+    <EditorHotKey_UpdateFrame
+        PressType="KeyDown"
+        MultiInputType="Single"
+        Threshold="0.0"
+        
+        Key_KM="RightBracket"
+    />
+
+
+</ActionKeyPreset>

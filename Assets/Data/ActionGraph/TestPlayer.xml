@@ -1,0 +1,78 @@
+<ActionGraph Name="TestPlayer" DefaultAction="Idle" DefaultFramePerSecond="12">
+
+    <BranchSet Name="MoveBranchSet">
+        <Branch Condition="(End == true) && (ActionTest == true)" Execute="Move"/>
+        <Branch Condition="(End == true) && (ActionTest == false)" Execute="Idle"/>
+    </BranchSet>
+
+    <Idle MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
+        <Animation Path="Resources/Sprites/TestPlayer/Idle" FramePerSecond="8.3" XFlip="True">
+            <FrameEvent Type="Movement" StartFrame="0" Friction="6" MaxVelocity="1.5" Speed="0"/>
+        </Animation>
+
+        <Branch Condition="ActionTest" Execute="Move"/>
+
+        <Branch Key="getKey_Jump == true" Condition="OnGround == true" Execute="Jump"/>
+        <Branch Key="getKey_AttackCharge" Execute="AttackCombo_0"/>
+        <Branch Condition="End" Execute="Idle"/>
+    </Idle>
+
+    <Move MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
+        <Animation Path="Resources/Sprites/TestPlayer/Move" XFlip="True">
+            <FrameEvent Type="Movement" StartFrame="0" Friction="0" MaxVelocity="2.5" Speed="20"/>
+        </Animation>
+
+        <Branch Condition="ActionTest == false" Execute="Idle"/>
+
+        <Branch Key="getKey_Jump == true" Condition="OnGround == true" Execute="Jump"/>
+        <Branch Key="getKey_AttackCharge" Execute="AttackCombo_0"/>
+        <Branch Condition="End" Execute="Move"/>
+    </Move>
+
+    <Jump MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
+        <Animation Path="Resources/Sprites/TestPlayer/Move" XFlip="True">
+            <FrameEvent Type="Jump" StartFrame="0" EndFrame="1" Power="3"/>
+
+        </Animation>
+
+        <Branch Key="getKey_AttackCharge" Execute="AttackCombo_0"/>
+
+        <Branch Condition="End == true" Execute="Jump"/>
+        <Branch Key="getKey_Jump == false" Condition="ActionTest == true" Execute="Move"/>
+        <Branch Key="getKey_Jump == false" Condition="ActionTest == false" Execute="Idle"/>
+    </Jump>
+
+
+    <AttackCombo_0 MovementType="FrameEvent" DirectionType="MousePointHorizontal" DirectionUpdateOnce="True" FlipType="Direction">
+        <Animation Path="Resources/Sprites/TestPlayer/Attack/0" FramePerSecond="6" XFlip="True">
+            <FrameEvent Type="Movement" StartFrame="0" Friction="6" MaxVelocity="2" Velocity="2" Speed="0"/>
+
+            <FrameEvent Type="FrameTag" StartFrame="0.5" EndFrame="2" Tag="AttackCancle"/>
+        </Animation>
+
+        <UseBranchSet Name="MoveBranchSet"/>
+        <Branch Key="getKey_AttackCharge" Condition="getFrameTag_AttackCancle" Execute="AttackCombo_1"/>
+    </AttackCombo_0>
+
+    <AttackCombo_1 MovementType="FrameEvent" DirectionType="MousePointHorizontal" DirectionUpdateOnce="True" FlipType="Direction">
+        <Animation Path="Resources/Sprites/TestPlayer/Attack/1" FramePerSecond="6" XFlip="True">
+            <FrameEvent Type="Movement" StartFrame="0" Friction="6" MaxVelocity="2" Velocity="2" Speed="0"/>
+
+            <FrameEvent Type="FrameTag" StartFrame="0.5" EndFrame="2" Tag="AttackCancle"/>
+        </Animation>
+
+        <UseBranchSet Name="MoveBranchSet"/>
+        <Branch Key="getKey_AttackCharge" Condition="getFrameTag_AttackCancle" Execute="AttackCombo_2"/>
+    </AttackCombo_1>
+
+    <AttackCombo_2 MovementType="FrameEvent" DirectionType="MousePointHorizontal" DirectionUpdateOnce="True" FlipType="Direction">
+        <Animation Path="Resources/Sprites/TestPlayer/Attack/2" FramePerSecond="6" XFlip="True">
+            <FrameEvent Type="Movement" StartFrame="0" Friction="6" MaxVelocity="2" Velocity="2" Speed="0"/>
+
+            <FrameEvent Type="FrameTag" StartFrame="0.5" EndFrame="2" Tag="AttackCancle"/>
+        </Animation>
+
+        <UseBranchSet Name="MoveBranchSet"/>
+    </AttackCombo_2>
+
+</ActionGraph>
