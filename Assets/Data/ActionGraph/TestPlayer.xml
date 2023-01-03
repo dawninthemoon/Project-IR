@@ -53,7 +53,7 @@
         <Branch Condition="End" Execute="Move"/>
     </Move>
 
-    <DodgeRoll MovementType="FrameEvent" DirectionType="Keep" FlipType="Direction">
+    <DodgeRoll MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
         <Animation Path="Resources/Sprites/TestPlayer/DodgeRoll" FramePerSecond="3" XFlip="True">
             <FrameEvent Type="Movement" StartFrame="0" Friction="1200" MaxVelocity="400" Velocity="400" Speed="0"/>
             <FrameEvent Type="FrameTag" StartFrame="0.4" EndFrame="2" Tag="AttackCancle"/>
@@ -113,6 +113,8 @@
         </Animation>
 
         <UseBranchSet Name="MoveBranchSet"/>
+
+        <Branch Key="getKey_DodgeRoll" Condition="ActionTest && getFrameTag_AttackCancle && OnGround" Execute="DodgeRoll"/>
         <Branch Key="getKey_AttackCharge" Condition="getFrameTag_AttackCancle" Execute="AttackCombo_1"/>
     </AttackCombo_0>
 
@@ -124,6 +126,8 @@
         </Animation>
 
         <UseBranchSet Name="MoveBranchSet"/>
+
+        <Branch Key="getKey_DodgeRoll" Condition="ActionTest && getFrameTag_AttackCancle && OnGround" Execute="DodgeRoll"/>
         <Branch Key="getKey_AttackCharge" Condition="getFrameTag_AttackCancle" Execute="AttackCombo_2"/>
     </AttackCombo_1>
 
@@ -135,6 +139,8 @@
         </Animation>
 
         <UseBranchSet Name="MoveBranchSet"/>
+        
+        <Branch Key="getKey_DodgeRoll" Condition="ActionTest && getFrameTag_AttackCancle && OnGround" Execute="DodgeRoll"/>
     </AttackCombo_2>
 
 </ActionGraph>
