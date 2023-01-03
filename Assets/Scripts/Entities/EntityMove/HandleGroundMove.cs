@@ -24,8 +24,8 @@ public class HandleGroundMove : ISetupable, ILoopable {
         _moveSpeed = speed;
     }
 
-    public void Initalize() {
-        _controller.Initalize();
+    public void Initialize() {
+        _controller.Initialize();
 
 		_gravity = -(2 * _maxJumpHeight) / Mathf.Pow (_timeToJumpApex, 2);
 		_maxJumpVelocity = Mathf.Abs(_gravity) * _timeToJumpApex;

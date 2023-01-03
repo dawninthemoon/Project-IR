@@ -10,32 +10,27 @@ public class GameMain : MonoBehaviour {
     private HandleGroundMove _playerMove;
 
     void Awake() {
-        //var levelManager = LevelManager.GetInstance();
-
-        //AssetManager.GetInstance().Initalize();
-        CollisionManager.GetInstance().Initalize();
+        var levelManager = LevelManager.GetInstance();
+        CollisionManager.GetInstance().Initialize();
         
-        /*
-        levelManager.Initalize();
-        //_enemyCreation.Initalize();
+        levelManager.Initialize();
 
         EventCommand.SharedData sharedData = new EventCommand.SharedData(
-            _player,
+            player,
             levelManager.TileGrid,
-            levelManager.LevelDictionary,
-            _enemyCreation
+            levelManager.LevelDictionary
         );
         EventManager.GetInstance().Initalize(sharedData);
-
-        levelManager.LoadLevel(levelManager.CurrentLevelName);*/
+        
+        levelManager.LoadLevel(levelManager.CurrentLevelName);
     }
 
     void Start() {
         GroundController controller = player.GetComponent<GroundController>();
-        controller.Initalize();
+        controller.Initialize();
 
-        _playerMove = new HandleGroundMove(controller, 1.5f, 2.5f, 6f);
-        _playerMove.Initalize();
+        _playerMove = new HandleGroundMove(controller, 45f, 65f, 100f);
+        _playerMove.Initialize();
 
         PlayerFSM playerFSM = player.GetComponent<PlayerFSM>();
         playerFSM.Initalize();

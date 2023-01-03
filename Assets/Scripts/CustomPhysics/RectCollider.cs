@@ -61,8 +61,6 @@ namespace CustomPhysics {
         public bool IsCollision(CircleCollider other) {
             return CollisionManager.GetInstance().IsCollision(this, other);
         }
-        public bool IsCollision(PolygonCollider other) => false;
-
         public Vector2 GetWidthVector() {
             Vector2 ret;
             ret.x = _rect.width * Mathf.Abs(transform.localScale.x) * Mathf.Cos(_rect.rotation) * 0.5f;

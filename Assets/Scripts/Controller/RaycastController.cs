@@ -4,8 +4,8 @@ using CustomPhysics;
 
 [RequireComponent (typeof (RectCollider))]
 public class RaycastController : MonoBehaviour, ISetupable {
-	protected float _skinWidth = 0.015f;
-	const float _dstBetweenRays = 0.25f;
+	protected float _skinWidth = 0.5f;
+	const float _dstBetweenRays = 5f;
 	[HideInInspector]
 	public int _horizontalRayCount;
 	[HideInInspector]
@@ -18,7 +18,7 @@ public class RaycastController : MonoBehaviour, ISetupable {
  	RectCollider _collider = null;
 	public RaycastOrigins raycastOrigins;
 
-	public virtual void Initalize() {
+	public virtual void Initialize() {
 		_collider = GetComponent<RectCollider>();
 		CalculateRaySpacing();
 	}

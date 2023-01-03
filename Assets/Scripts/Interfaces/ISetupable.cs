@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface ISetupable {
-    void Initalize();
+    void Initialize();
 }
 
 public interface ILoopable {

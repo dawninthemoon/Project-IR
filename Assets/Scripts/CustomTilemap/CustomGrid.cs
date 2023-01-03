@@ -63,8 +63,8 @@ namespace CustomTilemap {
         }
 
         void AllocGridList(int width, int height) {
-            int widthSize = _gridList.Count;
-            int heightSize = _gridList[0].Count;
+            int widthSize = _gridList[0].Count;
+            int heightSize = _gridList.Count;
 
             if (height > heightSize) {
                 for (int i = 0; i < height - heightSize; ++i) {

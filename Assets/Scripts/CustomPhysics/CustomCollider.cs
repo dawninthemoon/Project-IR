@@ -6,6 +6,7 @@ using UnityEngine.Events;
 namespace CustomPhysics {
     public enum ColliderLayerMask {
         Default,
+        Door,
         Ground,
         DetectPlayer,
         PlayerHitbox,
@@ -25,7 +26,7 @@ namespace CustomPhysics {
         }
         public string Tag { get; set; }
         public UnityEvent OnCollisionEvent { get; private set; } = new UnityEvent();
-        int _layerMask;
+        private int _layerMask;
         [SerializeField] protected Color _gizmoColor = Color.red;
 
         protected virtual void Start() {
@@ -48,6 +49,7 @@ namespace CustomPhysics {
             case ColliderLayerMask.EnemyHitbox:
                 AddBitMask(ColliderLayerMask.PlayerAttack);
                 break;
+            case ColliderLayerMask.Door:
             case ColliderLayerMask.Ground:
             case ColliderLayerMask.PlayerAttack:
             case ColliderLayerMask.EnemyAttack:
@@ -67,7 +69,7 @@ namespace CustomPhysics {
         }
         public abstract bool IsCollision(CustomCollider collider);
         public void OnCollision(CustomCollider collider) {
-            OnCollisionEvent.Invoke();
+            OnCollisionEvent?.Invoke();
         }
         public abstract Rectangle GetBounds();
     }

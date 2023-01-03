@@ -19,17 +19,23 @@ namespace CustomPhysics {
 
     public class CollisionManager : Singleton<CollisionManager>, ISetupable, ILoopable {
         static Vector2[] _cachedVectorArr;
-        List<CustomCollider> _colliders;
-        List<PolygonCollider> _tileColliders;
-        QuadTree<CustomCollider> _quadTree;
-        List<CustomCollider> _adjustObjectsList;
+        private List<CustomCollider> _colliders;
+        private List<PolygonCollider> _tileColliders;
+        private QuadTree<CustomCollider> _quadTree;
+        private List<CustomCollider> _adjustObjectsList;
+        private ObjectPool<PolygonCollider> _polygonColliderPool;
         
-        public void Initalize() {
+        public void Initialize() {
             _quadTree = new QuadTree<CustomCollider>(0, new Rectangle(0f, 0f, 1000f, 1000f));
             _cachedVectorArr = new Vector2[4];
             _tileColliders = new List<PolygonCollider>();
             _colliders = new List<CustomCollider>();
             _adjustObjectsList = new List<CustomCollider>();
+            _polygonColliderPool = new ObjectPool<PolygonCollider>(10, () => {
+                PolygonCollider c = new GameObject().AddComponent<PolygonCollider>();
+                c.gameObject.SetActive(false);
+                return c;
+            }, null, (PolygonCollider obj) => obj.gameObject.SetActive(false));
         }
 
         public void Progress() {
@@ -46,7 +52,7 @@ namespace CustomPhysics {
 
                 int numOfAdjustObjects = _adjustObjectsList.Count;
                 for (int j = 0; j < numOfAdjustObjects; ++j) {
-                    if (_colliders[i].CannotCollision(_adjustObjectsList[i].Layer)) continue;
+                    if (_colliders[i].CannotCollision(_adjustObjectsList[j].Layer)) continue;
                     if (_colliders[i].IsCollision(_adjustObjectsList[j])) {
                         _colliders[i].OnCollision(_adjustObjectsList[j]);
                     }
@@ -58,12 +64,26 @@ namespace CustomPhysics {
         }
 
         public void ClearTileColliders() {
-            _tileColliders.Clear();
+            for (int i = 0; i < _tileColliders.Count; ++i) {
+                _polygonColliderPool.ReturnObject(_tileColliders[i]);
+                _tileColliders.RemoveAt(i--);
+            }
         }
 
         public void AddTileCollider(Vector2[] points) {
-            PolygonCollider collider = new GameObject().AddComponent<PolygonCollider>();
+            PolygonCollider collider =_polygonColliderPool.GetObject();
             collider.Layer = ColliderLayerMask.Ground;
+            collider.Initalize(points);
+            collider.OnCollisionEvent.RemoveAllListeners();
+            _tileColliders.Add(collider);
+        }
+
+        public void AddDoorCollider(Vector2[] points, string target) {
+            PolygonCollider collider = _polygonColliderPool.GetObject();
+            collider.Layer = ColliderLayerMask.Door;
+            collider.OnCollisionEvent.AddListener(() => {
+                LevelManager.GetInstance().LoadLevel(target);
+            });
             collider.Initalize(points);
             _tileColliders.Add(collider);
         }
@@ -197,6 +217,7 @@ namespace CustomPhysics {
             }
             return true;
         }
+
         public bool IsCollision(CircleCollider c1, CircleCollider c2) {
             Circle circle1 = c1.CircleShape;
             Circle circle2 = c2.CircleShape;

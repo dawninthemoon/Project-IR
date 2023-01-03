@@ -38,10 +38,13 @@ namespace CustomPhysics {
             _polygon.points = points.Clone() as Vector2[];
             _polygon.offset = Vector2.zero;
             _polygon.CalculateMinMaxBounds();
+
+            gameObject.SetActive(true);
         }
         public Polygon GetPolygon() => _polygon;
         public override bool IsCollision(CustomCollider other) {
-            return IsCollision(other);
+            return false;
+            //return IsCollision(other);
         }
         public bool IsCollision(PolygonCollider other) {
             return CollisionManager.GetInstance().IsCollision(_polygon, transform.position, other.GetPolygon(), other.transform.position);
@@ -56,6 +59,7 @@ namespace CustomPhysics {
         void OnDrawGizmos() {
             if (_polygon == null) return;
             var points = _polygon.points;
+            if (points == null) return;
             int pLength = points.Length;
             if (pLength < 2) return;
 

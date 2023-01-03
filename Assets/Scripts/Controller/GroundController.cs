@@ -3,15 +3,14 @@ using System.Collections;
 using CustomPhysics;
 
 public class GroundController : RaycastController {
-
 	private float maxSlopeAngle = 80f;
 
 	public CollisionInfo collisions;
 	[HideInInspector]
 	public Vector2 playerInput;
 
-	public override void Initalize() {
-		base.Initalize();
+	public override void Initialize() {
+		base.Initialize();
 		collisions.faceDir = 1;
 	}
 
@@ -62,6 +61,10 @@ public class GroundController : RaycastController {
 			Debug.DrawRay(rayOrigin, Vector2.right * directionX, Color.green);
 			if (CollisionManager.GetInstance().Raycast(rayOrigin, Vector2.right * directionX, rayLength, out info)) {
 				if (info.distance < Mathf.Epsilon) continue;
+
+				if (info.collider.Layer == ColliderLayerMask.Door) {
+					info.collider.OnCollisionEvent?.Invoke();
+				}
 
 				RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength);
 				float slopeAngle = Vector2.Angle(info.normal, Vector2.up);
