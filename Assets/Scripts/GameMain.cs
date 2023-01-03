@@ -5,36 +5,31 @@ using CustomPhysics;
 
 public class GameMain : MonoBehaviour {
     [SerializeField] private GameEntityBase player = null;
-    [SerializeField] InputControl _input = null;
     //[SerializeField] EnemyCreation _enemyCreation = null;
     private HandleGroundMove _playerMove;
 
     void Awake() {
-        //var levelManager = LevelManager.GetInstance();
+        var levelManager = LevelManager.GetInstance();
 
-        //AssetManager.GetInstance().Initalize();
-        CollisionManager.GetInstance().Initalize();
+        CollisionManager.GetInstance().Initialize();
         
         player.Assign();
 
-        /*
-        levelManager.Initalize();
+        levelManager.Initialize();
         //_enemyCreation.Initalize();
 
         EventCommand.SharedData sharedData = new EventCommand.SharedData(
-            _player,
+            player,
             levelManager.TileGrid,
-            levelManager.LevelDictionary,
-            _enemyCreation
+            levelManager.LevelDictionary
+            //_enemyCreation
         );
         EventManager.GetInstance().Initalize(sharedData);
 
-        levelManager.LoadLevel(levelManager.CurrentLevelName);*/
+        levelManager.LoadLevel(levelManager.CurrentLevelName);
     }
 
-    void Start() 
-    {
-        
+    void Start() {
         player.Initialize();
 
     }

@@ -17,7 +17,7 @@ public partial class EventCommand {
 
             Vector3 worldPosition = data.Grid.GetWorldPosition(entity.row, entity.column);
             worldPosition.y += 0.5f;
-            player.SetActive(true);
+            player.gameObject.SetActive(true);
             player.transform.position = worldPosition;
             
             yield break;

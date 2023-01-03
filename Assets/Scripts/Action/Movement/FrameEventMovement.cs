@@ -34,7 +34,7 @@ public class FrameEventMovement : MovementBase
         if(_controller == null)
         {
             _controller = targetEntity.GetComponent<GroundController>();
-            _controller.Initalize();
+            _controller.Initialize();
         }
 
         int numMovementValue = (int)FrameEventMovementValueType.Count;

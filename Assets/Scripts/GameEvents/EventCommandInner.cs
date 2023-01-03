@@ -8,8 +8,8 @@ public partial class EventCommand {
         public CustomGrid<TileObject> Grid { get; }
         public Dictionary<string, LevelInfo> LevelDictionary { get; }
         public EntityInfo ExecuterEntity { get; set; }
-        public GameObject Player { get; set; }
-        public SharedData(GameObject player, CustomGrid<TileObject> grid, Dictionary<string, LevelInfo> info) {
+        public GameEntityBase Player { get; set; }
+        public SharedData(GameEntityBase player, CustomGrid<TileObject> grid, Dictionary<string, LevelInfo> info) {
             Player = player;
             Grid = grid;
             LevelDictionary = info;
