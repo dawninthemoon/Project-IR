@@ -17,7 +17,8 @@ public enum FrameEventType
     FrameEvent_KillEntity,
     FrameEvent_Movement,
     FrameEvent_Jump,
-
+    FrameEvent_Effect,
+    
     Count,
 }
 

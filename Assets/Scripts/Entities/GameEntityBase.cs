@@ -109,7 +109,7 @@ public class GameEntityBase : MonoBehaviour
     }
 
 
-    private FlipState getCurrentFlipState()
+    public FlipState getCurrentFlipState()
     {
         FlipState currentFlipState = _actionGraph.getCurrentFlipState();
         FlipState flipState = new FlipState();
@@ -280,10 +280,30 @@ public class GameEntityBase : MonoBehaviour
 
         float angleBetweenStick = MathEx.clampDegree(Vector3.SignedAngle(input, inputDirection,Vector3.forward));
         float angleDirection = MathEx.clampDegree(Vector3.SignedAngle(Vector3.right, _direction, Vector3.forward));
+        
+        float directionAngle = MathEx.directionToAngle(inputDirection);
+        int sector = 0;
+        if((directionAngle < 22.5) || (angleDirection >= 337.5))
+            sector = 0;
+        else if((directionAngle < 67.5) && (directionAngle >= 22.5))
+            sector = 1;
+        else if((directionAngle < 112.5) && (directionAngle >= 67.5))
+            sector = 2;
+        else if((directionAngle < 157.5) && (directionAngle >= 112.5))
+            sector = 3;
+        else if((directionAngle < 202.5) && (directionAngle >= 157.5))
+            sector = 4;
+        else if((directionAngle < 247.5) && (directionAngle >= 202.5))
+            sector = 5;
+        else if((directionAngle < 292.5) && (directionAngle >= 247.5))
+            sector = 6;
+        else if((directionAngle < 337.5) && (directionAngle >= 292.5))
+            sector = 7;
 
         _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.Action_Test, MathEx.equals(input.sqrMagnitude,0f,float.Epsilon) == false);
         _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.Action_Dash, Input.GetKey(KeyCode.Space));
         _actionGraph.setActionConditionData_Float(ConditionNodeUpdateType.Action_AngleBetweenStick, angleBetweenStick);
+        _actionGraph.setActionConditionData_Int(ConditionNodeUpdateType.Action_SectorFromStick, sector);
         _actionGraph.setActionConditionData_Float(ConditionNodeUpdateType.Action_AngleDirection, angleDirection);
 
         _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.Action_IsXFlip, _flipState.xFlip);
@@ -311,6 +331,8 @@ public class GameEntityBase : MonoBehaviour
 
     }
 
+
+    public FlipState getFlipState() {return _flipState;}
 
     public ActionGraph getActionGraph() {return _actionGraph;}
 

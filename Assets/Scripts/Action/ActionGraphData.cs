@@ -150,6 +150,7 @@ public enum ConditionNodeUpdateType
     Action_Dash,
     Action_AnimationEnd,
     Action_AngleBetweenStick,
+    Action_SectorFromStick,
     Action_AngleDirection,
     Action_IsXFlip,
     Action_IsYFlip,
@@ -234,6 +235,7 @@ public static class ConditionNodeInfoPreset
         {"ActionDash",new ConditionNodeInfo(ConditionNodeUpdateType.Action_Dash, ConditionNodeType.Bool)},
         {"End",new ConditionNodeInfo(ConditionNodeUpdateType.Action_AnimationEnd, ConditionNodeType.Bool)},
         {"AngleBetweenStick",new ConditionNodeInfo(ConditionNodeUpdateType.Action_AngleBetweenStick, ConditionNodeType.Float)},
+        {"SectorFromStick",new ConditionNodeInfo(ConditionNodeUpdateType.Action_SectorFromStick, ConditionNodeType.Int)},
         {"AngleDirection",new ConditionNodeInfo(ConditionNodeUpdateType.Action_AngleDirection, ConditionNodeType.Float)},
 
         {"IsXFlip",new ConditionNodeInfo(ConditionNodeUpdateType.Action_IsXFlip, ConditionNodeType.Bool)},

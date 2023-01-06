@@ -35,11 +35,16 @@ public class GameMain : MonoBehaviour {
     }
 
     void Update() {
-        ActionKeyInputManager.GetInstance().progress(Time.deltaTime);
+        float deltaTime = Time.deltaTime;
 
-        player.Progress(Time.deltaTime);
+        ActionKeyInputManager.GetInstance().progress(deltaTime);
+
+        player.Progress(deltaTime);
 
         CollisionManager.GetInstance().Progress();
+
+        EffectManager.GetInstance().AfterProgress(deltaTime);
+
     }
 
     void LateUpdate() {
