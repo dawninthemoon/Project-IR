@@ -72,7 +72,7 @@
     </Move>
 
     <DodgeRoll MovementType="FrameEvent" DirectionType="MoveInputHorizontal" FlipType="Direction">
-        <Animation Path="Resources/Sprites/TestPlayer/DodgeRoll" FramePerSecond="3" XFlip="True">
+        <Animation Path="Resources/Sprites/TestPlayer/DodgeRoll" FramePerSecond="13" XFlip="True">
             <FrameEvent Type="Movement" StartFrame="0" Friction="1200" MaxVelocity="400" Velocity="400" Speed="0"/>
             <FrameEvent Type="FrameTag" StartFrame="0.4" EndFrame="2" Tag="AttackCancel"/>
         </Animation>
