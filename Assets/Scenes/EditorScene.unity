@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 196572387}
+  - component: {fileID: 196572390}
   - component: {fileID: 196572389}
   - component: {fileID: 196572388}
   m_Layer: 5
@@ -199,6 +200,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 196572386}
   m_CullTransparentMesh: 1
+--- !u!114 &196572390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196572386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 922e326f6692e5a4b8a9b6069d5c5001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _xPositionWhenDisable: -804
+  _xPositionWhenActive: 0
+  _slideDuration: 0.3
+  transform: {fileID: 0}
 --- !u!1 &239461048
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +567,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669279423}
+  - component: {fileID: 669279426}
   - component: {fileID: 669279425}
   - component: {fileID: 669279424}
   m_Layer: 5
@@ -617,6 +635,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 669279422}
   m_CullTransparentMesh: 1
+--- !u!114 &669279426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669279422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cabd82465e8452840951da8eb6820a94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _xPositionWhenDisable: -227
+  _xPositionWhenActive: 0
+  _slideDuration: 0.35
+  transform: {fileID: 0}
 --- !u!1 &805261908
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,6 +830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 132c8649fcee28a48a6ed0e5194d8f84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _editorWindowParent: {fileID: 877319350}
 --- !u!1 &877319349
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,7 +841,7 @@ GameObject:
   m_Component:
   - component: {fileID: 877319350}
   m_Layer: 5
-  m_Name: '[Slide UI]'
+  m_Name: '[Editor Windows]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -830,7 +865,7 @@ RectTransform:
   - {fileID: 1917765852}
   - {fileID: 196572387}
   m_Father: {fileID: 1023664213}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -920,7 +955,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 911241864}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 844735611}
+        m_TargetAssemblyTypeName: ProjectEditor.EditorMain, Assembly-CSharp
+        m_MethodName: DisableAllProjectWindows
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 196572390}
+        m_TargetAssemblyTypeName: ProjectEditor.SlidableUI, Assembly-CSharp
+        m_MethodName: Toggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &911241864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1057,9 +1116,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 877319350}
   - {fileID: 1869199546}
   - {fileID: 1795316469}
-  - {fileID: 877319350}
   m_Father: {fileID: 1328068746}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1189,7 +1248,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1223936505}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 844735611}
+        m_TargetAssemblyTypeName: ProjectEditor.EditorMain, Assembly-CSharp
+        m_MethodName: DisableAllProjectWindows
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1917765855}
+        m_TargetAssemblyTypeName: ProjectEditor.SlidableUI, Assembly-CSharp
+        m_MethodName: Toggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1223936505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1413,7 +1496,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1415537452}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 844735611}
+        m_TargetAssemblyTypeName: ProjectEditor.EditorMain, Assembly-CSharp
+        m_MethodName: DisableAllProjectWindows
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1699579033}
+        m_TargetAssemblyTypeName: ProjectEditor.SlidableUI, Assembly-CSharp
+        m_MethodName: Toggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1415537452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1670,7 +1777,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1479485186}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 844735611}
+        m_TargetAssemblyTypeName: ProjectEditor.EditorMain, Assembly-CSharp
+        m_MethodName: DisableAllProjectWindows
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 669279426}
+        m_TargetAssemblyTypeName: ProjectEditor.SlidableUI, Assembly-CSharp
+        m_MethodName: Toggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1479485186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1792,7 +1923,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1543333476}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 844735611}
+        m_TargetAssemblyTypeName: ProjectEditor.EditorMain, Assembly-CSharp
+        m_MethodName: DisableAllProjectWindows
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1909263425}
+        m_TargetAssemblyTypeName: ProjectEditor.SlidableUI, Assembly-CSharp
+        m_MethodName: Toggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1543333476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1840,6 +1995,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1699579030}
+  - component: {fileID: 1699579033}
   - component: {fileID: 1699579032}
   - component: {fileID: 1699579031}
   m_Layer: 5
@@ -1907,6 +2063,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699579029}
   m_CullTransparentMesh: 1
+--- !u!114 &1699579033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699579029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64a29ba8657b65147aa4f796b9ed2290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _xPositionWhenDisable: -599
+  _xPositionWhenActive: 0
+  _slideDuration: 0.25
+  transform: {fileID: 0}
 --- !u!1 &1795316468
 GameObject:
   m_ObjectHideFlags: 0
@@ -1939,7 +2111,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1023664213}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -2168,7 +2340,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1023664213}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -2237,6 +2409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1909263422}
+  - component: {fileID: 1909263425}
   - component: {fileID: 1909263424}
   - component: {fileID: 1909263423}
   m_Layer: 5
@@ -2304,6 +2477,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1909263421}
   m_CullTransparentMesh: 1
+--- !u!114 &1909263425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909263421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7629fe8accdfcb84ea6542a061b712ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _xPositionWhenDisable: -599
+  _xPositionWhenActive: 0
+  _slideDuration: 0.25
+  transform: {fileID: 0}
 --- !u!1 &1917765851
 GameObject:
   m_ObjectHideFlags: 0
@@ -2313,6 +2502,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1917765852}
+  - component: {fileID: 1917765855}
   - component: {fileID: 1917765854}
   - component: {fileID: 1917765853}
   m_Layer: 5
@@ -2380,6 +2570,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917765851}
   m_CullTransparentMesh: 1
+--- !u!114 &1917765855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917765851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c6b330a28fc3a7439e468acd93ea8d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _xPositionWhenDisable: -599
+  _xPositionWhenActive: 0
+  _slideDuration: 0.25
+  transform: {fileID: 0}
 --- !u!1 &1980968422
 GameObject:
   m_ObjectHideFlags: 0

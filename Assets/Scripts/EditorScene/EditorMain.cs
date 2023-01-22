@@ -2,15 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EditorMain : MonoBehaviour
-{
-    void Start()
-    {
-        
-    }
+namespace ProjectEditor {
+    public class EditorMain : MonoBehaviour {
+        [SerializeField] private Transform _editorWindowParent = null;
 
-    void Update()
-    {
-        
+        private SlidableUI[] _editorWindows = null;
+
+        void Start() {
+            int numOfSlidableUI = _editorWindowParent.childCount;
+            _editorWindows = new SlidableUI[numOfSlidableUI];
+            for (int i = 0; i < numOfSlidableUI; ++i) {
+                _editorWindows[i] = _editorWindowParent.GetChild(i).GetComponent<SlidableUI>();
+                _editorWindows[i].Initialize();
+            }
+        }
+
+        public void DisableAllProjectWindows() {
+            foreach (var window in _editorWindows) {
+                window.SlideIn();
+            }
+        }
+
+        public void OnTilesetChanged() {
+
+        }
+
+        void Update() {
+            
+        }
     }
 }
