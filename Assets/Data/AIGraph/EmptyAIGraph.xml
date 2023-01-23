@@ -1,0 +1,13 @@
+<AIGraph Name="EmptyAIGraph" DefaultState="Entry">
+
+    <Include Path="Common/CommonEmptyPackage.xml"/>
+    <Include Path="Common/CommonDeadPackage.xml"/>
+    
+    <Entry Package="CommonEmptyPackage">
+        <Branch Condition="Dead" Execute="Dead"/>
+    </Entry>
+
+    <Dead Package="CommonDeadPackage">
+    </Dead>
+
+</AIGraph>
