@@ -5,8 +5,10 @@ using UnityEngine;
 namespace ProjectEditor {
     public class EditorMain : MonoBehaviour {
         [SerializeField] private Transform _editorWindowParent = null;
-
         private SlidableUI[] _editorWindows = null;
+        public static int CurrentGridWidth;
+        public static int CurrentGridHeight;
+        public static Vector3 CurrentOriginPosition;
 
         void Start() {
             int numOfSlidableUI = _editorWindowParent.childCount;

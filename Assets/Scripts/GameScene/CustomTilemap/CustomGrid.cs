@@ -11,7 +11,7 @@ public interface IGridObject {
 namespace CustomTilemap {
     public class CustomGrid<T> where T : IGridObject {
         public float CellSize { get; private set; }
-        List<List<T>> _gridList;
+        private List<List<T>> _gridList;
         Func<T> _createObjectCallback;
         Action<T> _returnObjectCallback;
         public int Width { get; private set; }
@@ -62,6 +62,42 @@ namespace CustomTilemap {
             updateVisualCallback();
         }
 
+        /// Only Used In Editor
+        public void ResizeGrid(Vector3 originPosition, int currentGridWidth, int currentGridHeight, Vector3 currentOriginPosition, int widthDelta, int heightDelta) {
+            int prevWidth = currentGridWidth - widthDelta;
+            int prevHeight = currentGridHeight - heightDelta;
+            bool wChanged = !(Mathf.Abs(currentOriginPosition.x - originPosition.x) < Mathf.Epsilon);
+            bool hChanged = !(Mathf.Abs(currentOriginPosition.y - originPosition.y) < Mathf.Epsilon);
+
+            T[,] gridArray = new T[currentGridWidth, currentGridHeight];
+            /*
+            for (int x = 0; x < currentGridWidth; ++x) {
+                for (int y = 0; y < currentGridHeight; ++y) {
+                    gridArray[x, y] = _createObjectCallback();
+                }
+            }
+            
+            for (int x = 0; x < prevWidth; ++x) {
+                for (int y = 0; y < prevHeight; ++y) {
+                    int idx = _gridArray[x, y].GetIndex();
+                    _returnObjectCallback?.Invoke(_gridArray[x, y]);
+                    if (idx == -1) continue;
+
+                    int alteredX = wChanged ? x + widthDelta : x;
+                    int alteredY = hChanged ? y + heightDelta : y;
+
+                    if (alteredX < 0 || alteredY < 0 || alteredX >= LayerModel.CurrentGridWidth || alteredY >= LayerModel.CurrentGridHeight) {
+                        continue;
+                    }
+
+                    gridArray[alteredX, alteredY].SetIndex(idx);
+                }
+            }
+
+            _gridArray = gridArray.Clone() as T[,];*/
+        }
+
+
         void AllocGridList(int width, int height) {
             int widthSize = _gridList[0].Count;
             int heightSize = _gridList.Count;
@@ -81,6 +117,10 @@ namespace CustomTilemap {
                     }
                 }
             }
+        }
+
+        public List<List<T>> GetGridList() {
+            return _gridList;
         }
 
         public T GetGridObject(int r, int c) {
