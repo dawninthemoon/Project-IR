@@ -61,6 +61,7 @@ public class ActionGraphNodeData
 
     public bool                         _isActionSelection = false;
     public bool                         _directionUpdateOnce = false;
+    public bool                         _flipTypeUpdateOnce = false;
 
     public int                          _index;
     public int                          _branchIndexStart;

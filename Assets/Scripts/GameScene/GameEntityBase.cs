@@ -26,6 +26,7 @@ public class GameEntityBase : MonoBehaviour
     private Vector3             _defenceDirection = Vector3.zero;
 
     private bool                _updateDirection = true;
+    private bool                _updateFlipType = true;
 
 
     public void Assign()
@@ -87,6 +88,7 @@ public class GameEntityBase : MonoBehaviour
 
                 _currentDefenceType = _actionGraph.getCurrentDefenceType();
                 _updateDirection = true;
+                _updateFlipType = true;
             }
 
             updateDirection();
@@ -99,7 +101,11 @@ public class GameEntityBase : MonoBehaviour
             _spriteRenderer.transform.localRotation = _actionGraph.getCurrentAnimationRotation();
             _spriteRenderer.transform.localScale = _actionGraph.getCurrentAnimationScale();
             
-            _flipState = getCurrentFlipState();
+            if(_updateFlipType)
+            {
+                _flipState = getCurrentFlipState();
+                _updateFlipType = _actionGraph.getCurrentFlipTypeUpdateOnce() == false;
+            }
 
             _spriteRenderer.flipX = _flipState.xFlip;
             _spriteRenderer.flipY = _flipState.yFlip;
@@ -268,7 +274,7 @@ public class GameEntityBase : MonoBehaviour
 
         float zRotation = _spriteRotation.eulerAngles.z;
         if(rotationType != RotationType.AlwaysRight)
-            zRotation -= (getCurrentFlipState().xFlip ? -180f : 0f);
+            zRotation -= (_flipState.xFlip ? -180f : 0f);
 
         _spriteRenderer.transform.localRotation *= Quaternion.Euler(0f,0f,zRotation);
     }

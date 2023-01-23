@@ -17,7 +17,10 @@ public static class XMLScriptConverter
         catch(Exception exp)
         {
             DebugUtil.assert(false,"failed to load xml file\n{0}\n{1}",path,exp.Message);
+            return null;
         }
+
+        xmlFile = xmlFile.Replace("~","\"");
 
         int startOffset = 0;
         int endOffset = 0;
@@ -28,7 +31,9 @@ public static class XMLScriptConverter
 
             int offset = xmlFile.IndexOf('"',startOffset);
             if(offset == -1)
+            {
                 break;
+            }
 
             startOffset = offset + 1;
             endOffset = xmlFile.IndexOf('"',startOffset);
