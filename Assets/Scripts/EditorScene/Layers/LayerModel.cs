@@ -6,7 +6,7 @@ namespace ProjectEditor {
     public class LayerModel : MonoBehaviour {
         [SerializeField] LayerWindow _layerWindow = null;
         public Dictionary<string, Layer> CurrentLayerDictionary { get; private set;}
-        public string SelectedLayerID;
+        public string SelectedLayerID { get; set; }
 
         private void Awake() {
             LoadLayers();
@@ -19,6 +19,11 @@ namespace ProjectEditor {
             EditorMain.CurrentOriginPosition = Vector3.zero;
 
             CurrentLayerDictionary = new Dictionary<string, Layer>();
+        }
+
+        public void AddLayer(Layer layer) {
+            CurrentLayerDictionary.Add(layer.LayerID, layer);
+            //_layerWindow.
         }
 
         public bool IsLayerEmpty() => (CurrentLayerDictionary.Count == 0);

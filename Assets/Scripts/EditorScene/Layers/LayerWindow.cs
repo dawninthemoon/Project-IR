@@ -19,7 +19,11 @@ namespace ProjectEditor {
             }
 
             string layerName = DefaultTileLayerName;
-            
+            var tilemapLayer = new TileLayer(name, _layerCounter, 16);
+
+            _layerModel.AddLayer(tilemapLayer);
+
+            ++_layerCounter;
         }
 
         public void CreateColliderLayer() {
@@ -31,6 +35,10 @@ namespace ProjectEditor {
         }
 
         public void CreateBackgroundLayer() {
+
+        }
+
+        private void CreateLayerButton() {
 
         }
     }

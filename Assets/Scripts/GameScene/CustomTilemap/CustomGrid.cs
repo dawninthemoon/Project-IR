@@ -63,38 +63,36 @@ namespace CustomTilemap {
         }
 
         /// Only Used In Editor
-        public void ResizeGrid(Vector3 originPosition, int currentGridWidth, int currentGridHeight, Vector3 currentOriginPosition, int widthDelta, int heightDelta) {
+        public void ResizeGrid(Vector3 currentOriginPosition, int currentGridWidth, int currentGridHeight, Vector3 originPosition, int widthDelta, int heightDelta) {
             int prevWidth = currentGridWidth - widthDelta;
             int prevHeight = currentGridHeight - heightDelta;
             bool wChanged = !(Mathf.Abs(currentOriginPosition.x - originPosition.x) < Mathf.Epsilon);
             bool hChanged = !(Mathf.Abs(currentOriginPosition.y - originPosition.y) < Mathf.Epsilon);
 
-            T[,] gridArray = new T[currentGridWidth, currentGridHeight];
-            /*
+            List<List<T>> tempGrid = new List<List<T>>();
             for (int x = 0; x < currentGridWidth; ++x) {
                 for (int y = 0; y < currentGridHeight; ++y) {
-                    gridArray[x, y] = _createObjectCallback();
+                    tempGrid[x].Add(_createObjectCallback());
                 }
             }
-            
             for (int x = 0; x < prevWidth; ++x) {
                 for (int y = 0; y < prevHeight; ++y) {
-                    int idx = _gridArray[x, y].GetIndex();
-                    _returnObjectCallback?.Invoke(_gridArray[x, y]);
+                    int idx = _gridList[x][y].GetIndex();
+                    _returnObjectCallback?.Invoke(_gridList[x][y]);
                     if (idx == -1) continue;
 
                     int alteredX = wChanged ? x + widthDelta : x;
                     int alteredY = hChanged ? y + heightDelta : y;
 
-                    if (alteredX < 0 || alteredY < 0 || alteredX >= LayerModel.CurrentGridWidth || alteredY >= LayerModel.CurrentGridHeight) {
+                    if (alteredX < 0 || alteredY < 0 || alteredX >= currentGridWidth || alteredY >= currentGridHeight) {
                         continue;
                     }
 
-                    gridArray[alteredX, alteredY].SetIndex(idx);
+                    tempGrid[alteredX][alteredY].SetIndex(idx);
                 }
             }
-
-            _gridArray = gridArray.Clone() as T[,];*/
+            
+            _gridList = tempGrid;
         }
 
 

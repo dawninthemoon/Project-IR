@@ -8,7 +8,7 @@ namespace ProjectEditor {
         [SerializeField] private float _xPositionWhenActive = 0f;
         [SerializeField] private float _slideDuration = 0.5f;
 
-        public new RectTransform transform;
+        [HideInInspector] public new RectTransform transform;
         private Coroutine _slideCoroutine;
 
         public virtual void Initialize() {
