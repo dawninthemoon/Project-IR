@@ -5,10 +5,15 @@ using UnityEngine;
 public class GameEntityBase : MonoBehaviour
 {
     public string               actionGraphPath = "Assets\\Data\\ActionGraph\\TestPlayer.xml";
+    public string               aiGraphPath = "Assets\\Data\\AIGraph\\EmptyAIGraph.xml";
 
     private ActionGraph         _actionGraph;
+    private AIGraph             _aiGraph;
+
     private MovementControl     _movementControl = new MovementControl();
 
+
+    private GameEntityBase      _currentTarget;
 
     private AttackState         _attackState = AttackState.Default;
     private DefenceState        _defenceState = DefenceState.Default;
@@ -26,6 +31,7 @@ public class GameEntityBase : MonoBehaviour
     private Vector3             _defenceDirection = Vector3.zero;
 
     private bool                _updateDirection = true;
+    private bool                _updateFlipType = true;
 
 
     public void Assign()
@@ -33,12 +39,17 @@ public class GameEntityBase : MonoBehaviour
         _actionGraph = new ActionGraph(ActionGraphLoader.readFromXML(IOControl.PathForDocumentsFile(actionGraphPath)));
         _actionGraph.assign();
 
+        _aiGraph = new AIGraph(_actionGraph, AIGraphLoader.readFromXML(IOControl.PathForDocumentsFile(aiGraphPath)));
+        _aiGraph.assign();
+
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void Initialize()
     {        
         _actionGraph.initialize();
+        _aiGraph.initialize(this);
+
         _movementControl.changeMovement(this,_actionGraph.getCurrentMovement());
         _movementControl.setMoveScale(_actionGraph.getCurrentMoveScale());
     }
@@ -46,21 +57,21 @@ public class GameEntityBase : MonoBehaviour
     public void Progress(float deltaTime)
     {
 
-        // if(_aiGraph != null)
-        // {
-        //     _aiGraph.updateConditionData();
+        if(_aiGraph != null)
+        {
+            _aiGraph.updateConditionData();
             
-        //     _actionGraph.setActionConditionData_Float(ConditionNodeUpdateType.AI_TargetDistance, getDistance(_currentTarget));
-        //     _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.AI_TargetExists, _currentTarget != null);
-        //     _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.AI_ArrivedTarget, _aiGraph.isAIArrivedTarget());
-        //     _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.AI_CurrentPackageEnd, _aiGraph.isCurrentPackageEnd());
-        //     _actionGraph.setActionConditionData_TargetFrameTag(_currentTarget == null ? null : _currentTarget.getCurrentFrameTagList());
-        //     _actionGraph.setActionConditionData_Float(ConditionNodeUpdateType.AI_PackageStateExecutedTime, _aiGraph.getCurrentPackageExecutedTime());
-        //     _actionGraph.setActionConditionData_Float(ConditionNodeUpdateType.AI_GraphStateExecutedTime, _aiGraph.getCurrentGraphExecutedTime());
+            _actionGraph.setActionConditionData_Float(ConditionNodeUpdateType.AI_TargetDistance, getDistance(_currentTarget));
+            _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.AI_TargetExists, _currentTarget != null);
+            _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.AI_ArrivedTarget, _aiGraph.isAIArrivedTarget());
+            _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.AI_CurrentPackageEnd, _aiGraph.isCurrentPackageEnd());
+            _actionGraph.setActionConditionData_TargetFrameTag(_currentTarget == null ? null : _currentTarget.getCurrentFrameTagList());
+            _actionGraph.setActionConditionData_Float(ConditionNodeUpdateType.AI_PackageStateExecutedTime, _aiGraph.getCurrentPackageExecutedTime());
+            _actionGraph.setActionConditionData_Float(ConditionNodeUpdateType.AI_GraphStateExecutedTime, _aiGraph.getCurrentGraphExecutedTime());
 
-        //     _aiGraph.progress(deltaTime,this);
-        // }
-        // else
+            _aiGraph.progress(deltaTime,this);
+        }
+        else
         {
             _actionGraph.setActionConditionData_Float(ConditionNodeUpdateType.AI_TargetDistance, 0f);
             _actionGraph.setActionConditionData_Bool(ConditionNodeUpdateType.AI_TargetExists, false);
@@ -87,6 +98,7 @@ public class GameEntityBase : MonoBehaviour
 
                 _currentDefenceType = _actionGraph.getCurrentDefenceType();
                 _updateDirection = true;
+                _updateFlipType = true;
             }
 
             updateDirection();
@@ -99,7 +111,11 @@ public class GameEntityBase : MonoBehaviour
             _spriteRenderer.transform.localRotation = _actionGraph.getCurrentAnimationRotation();
             _spriteRenderer.transform.localScale = _actionGraph.getCurrentAnimationScale();
             
-            _flipState = getCurrentFlipState();
+            if(_updateFlipType)
+            {
+                _flipState = getCurrentFlipState();
+                _updateFlipType = _actionGraph.getCurrentFlipTypeUpdateOnce() == false;
+            }
 
             _spriteRenderer.flipX = _flipState.xFlip;
             _spriteRenderer.flipY = _flipState.yFlip;
@@ -222,11 +238,11 @@ public class GameEntityBase : MonoBehaviour
                 direction = (_recentlyAttackPoint - transform.position).normalized;
                 break;
             case DirectionType.AI:
-                // direction = _aiGraph.getRecentlyAIDirection();
+                direction = _aiGraph.getRecentlyAIDirection();
                 break;
             case DirectionType.AITarget:
-                // if(_currentTarget != null && _currentTarget.isValid())
-                //     direction = (_currentTarget.transform.position - transform.position).normalized;
+                if(_currentTarget != null && _currentTarget.isValid())
+                     direction = (_currentTarget.transform.position - transform.position).normalized;
                 break;
             case DirectionType.MoveDirection:
                 direction = getMovementControl().getMoveDirection();
@@ -268,7 +284,7 @@ public class GameEntityBase : MonoBehaviour
 
         float zRotation = _spriteRotation.eulerAngles.z;
         if(rotationType != RotationType.AlwaysRight)
-            zRotation -= (getCurrentFlipState().xFlip ? -180f : 0f);
+            zRotation -= (_flipState.xFlip ? -180f : 0f);
 
         _spriteRenderer.transform.localRotation *= Quaternion.Euler(0f,0f,zRotation);
     }
@@ -357,6 +373,11 @@ public class GameEntityBase : MonoBehaviour
         return _spriteRenderer.transform;
     }
 
+    public bool isValid() 
+    {
+        return _movementControl != null && _actionGraph != null && _spriteRenderer != null && gameObject.activeInHierarchy;
+    }
+
     public bool applyFrameTag(string tag) {return _actionGraph.applyFrameTag(tag);}
     public void deleteFrameTag(string tag) {_actionGraph.deleteFrameTag(tag);}
     public bool checkFrameTag(string tag) {return _actionGraph.checkFrameTag(tag);}
@@ -364,4 +385,16 @@ public class GameEntityBase : MonoBehaviour
     public Vector3 getDirection() {return _direction;}
     public MovementBase getCurrentMovement() {return _movementControl.getCurrentMovement();}
     public MovementControl getMovementControl(){return _movementControl;}
+
+    public void setAction(int index) {_actionGraph.changeActionOther(index);}
+    public void setAction(string nodeName) {_actionGraph.changeActionOther(_actionGraph.getActionIndex(nodeName));}
+
+    public void terminateAIPackage() {_aiGraph.terminatePackage();}
+    public void setAIState(int index) {_aiGraph.changeAIPackageStateOther(index);}
+    public void setTargetEntity(GameEntityBase target) {_currentTarget = target;}
+    public void setAiDirection(float angle) {_aiGraph.setAIDirection(angle);}
+    public void setAiDirection(Vector3 direction) {_aiGraph.setAIDirection(direction);}
+
+    public GameEntityBase getCurrentTargetEntity() {return _currentTarget;}
+    public HashSet<string> getCurrentFrameTagList() {return _actionGraph.getCurrentFrameTagList();}
 }

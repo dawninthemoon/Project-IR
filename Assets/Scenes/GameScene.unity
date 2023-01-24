@@ -634,6 +634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionGraphPath: Assets\Data\ActionGraph\TestPlayer.xml
+  aiGraphPath: Assets\Data\AIGraph\EmptyAIGraph.xml
 --- !u!1 &1851692076
 GameObject:
   m_ObjectHideFlags: 3

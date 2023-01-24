@@ -1,0 +1,9 @@
+
+<AIPackage Name="CommonEmptyPackage" DefaultState="Entry">
+    <AIState>
+        <Entry UpdateTime="0.0">
+            <AIEvent Type="TerminatePackage"/>
+        </Entry>
+
+    </AIState>
+</AIPackage>

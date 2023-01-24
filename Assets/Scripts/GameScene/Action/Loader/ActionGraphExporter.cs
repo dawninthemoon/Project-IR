@@ -276,6 +276,10 @@ public static class ActionGraphLoader
             {
                 nodeData._directionUpdateOnce = bool.Parse(targetValue);
             }
+            else if(targetName == "FlipTypeUpdateOnce")
+            {
+                nodeData._flipTypeUpdateOnce = bool.Parse(targetValue);
+            }
             else
             {
                 DebugUtil.assert(false,"invalid attribute type !!! : {0}", targetName);
