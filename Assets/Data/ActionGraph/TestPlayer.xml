@@ -111,7 +111,7 @@
     </DodgeRoll>
 
     <JumpStart MovementType=~FrameEvent~ DirectionType=~MoveInputHorizontal~ FlipType=~Direction~>
-        <Animation Path=~Resources/Sprites/TestPlayer/Jump/Start~ XFlip=~True~ FramePerSecond=~10~>
+        <Animation Path=~Resources/Sprites/TestPlayer/Jump/Start~ XFlip=~True~ FramePerSecond=~12~>
             <FrameEvent Type=~Jump~ StartFrame=~1~ Power=~gv_normalJumpPower~/>
             <FrameEvent Type=~Movement~ StartFrame=~0~ Friction=~gv_normalAirFriction~ MaxVelocity=~gv_normalMaxVelocity~ Speed=~gv_normalSpeed~/>
         </Animation>
@@ -140,8 +140,8 @@
         <UseBranchSet Name=~AttackStartAir~/>
 
         <Branch Condition=~End == true~ Execute=~FallLoop~/>
-        <Branch Condition=~OnGround && (ActionTest == true)~ Execute=~Move~/>
-        <Branch Condition=~OnGround && (ActionTest == false)~ Execute=~Idle~/>
+        <Branch Condition=~OnGround && (ActionTest == true)~ Execute=~FallToMove~/>
+        <Branch Condition=~OnGround && (ActionTest == false)~ Execute=~FallToIdle~/>
     </FallStart>
 
     <FallLoop MovementType=~FrameEvent~ DirectionType=~MoveInputHorizontal~ FlipType=~Direction~>
