@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace ProjectEditor {
     public class TilesetWindow : SlidableUI {
@@ -26,8 +27,8 @@ namespace ProjectEditor {
                 });
                 ++index;
 
-                //Dropdown.OptionData optionData = new Dropdown.OptionData(pair.Key);
-                //_editorView.LayerTilesetNameDropdown.options.Add(optionData);
+                TMP_Dropdown.OptionData optionData = new TMP_Dropdown.OptionData(pair.Key);
+                _editorView.LayerTilesetNameDropdown.options.Add(optionData);
             }
 
             _tilesetModel.SetTilesetIndex(0);

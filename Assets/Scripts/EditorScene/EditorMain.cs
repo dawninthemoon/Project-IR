@@ -9,6 +9,7 @@ namespace ProjectEditor {
         [SerializeField] private TilesetPickerWindow _tilesetPickerWindow = null;
         [SerializeField] private EditorView _editorView = null;
         [SerializeField] private LayerPicker _layerPicker = null;
+        [SerializeField] private TileLayerWindow _tileLayerWindow = null;
         private SlidableUI[] _editorWindows = null;
         public static int CurrentGridWidth;
         public static int CurrentGridHeight;
@@ -17,6 +18,7 @@ namespace ProjectEditor {
 
         private void Awake() {
             _layerPicker.SetOnTilesetChanged(OnTilesetChanged);
+            _tileLayerWindow.SetOnTilesetChanged(OnTilesetChanged);
         }
 
         void Start() {
