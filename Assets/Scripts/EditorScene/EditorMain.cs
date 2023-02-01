@@ -8,11 +8,16 @@ namespace ProjectEditor {
         [SerializeField] private TilesetModel _tilesetModel = null;
         [SerializeField] private TilesetPickerWindow _tilesetPickerWindow = null;
         [SerializeField] private EditorView _editorView = null;
+        [SerializeField] private LayerPicker _layerPicker = null;
         private SlidableUI[] _editorWindows = null;
         public static int CurrentGridWidth;
         public static int CurrentGridHeight;
         public static Vector3 CurrentOriginPosition;
         private int _selectedTileIndex = 0;
+
+        private void Awake() {
+            _layerPicker.SetOnTilesetChanged(OnTilesetChanged);
+        }
 
         void Start() {
             int numOfSlidableUI = _editorWindowParent.childCount;

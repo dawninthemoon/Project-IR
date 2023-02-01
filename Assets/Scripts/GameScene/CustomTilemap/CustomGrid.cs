@@ -130,6 +130,12 @@ namespace CustomTilemap {
             }
         }
 
+        public T GetGridObject(Vector3 worldPosition, Vector3 originPosition) {
+            int x, y;
+            GridUtility.GetXY(worldPosition, out x, out y, CellSize, originPosition);
+            return GetGridObject(x, y);
+        }
+
         public Vector3 GetWorldPosition(int r, int c) {
             return GridUtility.GetWorldPosition(r, c, CellSize, _originPosition);
         }

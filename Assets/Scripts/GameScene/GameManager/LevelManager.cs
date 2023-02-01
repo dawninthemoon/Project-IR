@@ -62,7 +62,7 @@ public class LevelManager : SingletonWithMonoBehaviour<LevelManager>, ISetupable
         var material = resourceManager.GetAsset<Material>("Tileset/" + tilesetName);
         
         _tilemapVisual = Instantiate(tilemapVisual);
-        _tilemapVisual.Initalize(TileGrid, material);
+        _tilemapVisual.Initialize(TileGrid, material);
         TileGrid.ResetGrid(curLevel, curLevel.width, curLevel.height, curLevel.originPosition, _tilemapVisual.UpdateHeatMapVisual);
     }
     void InitCameraClamp() {

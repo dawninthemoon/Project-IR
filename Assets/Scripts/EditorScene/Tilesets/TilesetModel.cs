@@ -29,7 +29,7 @@ namespace ProjectEditor {
 
         public void ChangeTileset(string tilesetName, TilemapVisual visual) {
             Material material = CurrentTilesetMaterials[tilesetName];
-            visual.Initalize(null, material);
+            visual.Initialize(null, material);
         }
 
         public Material GetMaterialByName(string name) {

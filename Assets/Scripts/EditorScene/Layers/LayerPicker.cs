@@ -33,6 +33,15 @@ namespace ProjectEditor {
             _buttons.Add(layer.LayerID, button);
         }
 
+        public void DeleteLayerButton(string curID) {
+            var button = _buttons[curID];
+            _buttons.Remove(curID);
+                
+            button.transform.SetParent(null);
+            button.gameObject.SetActive(false);
+            DestroyImmediate(button);
+        }
+
         void OnButtonClicked(Button button, LayerModel layerModel, Layer layer) {
             layerModel.SelectedLayerID = layer.LayerID;
             HighlightButton(button);

@@ -15,7 +15,7 @@ namespace CustomTilemap {
         protected Dictionary<int, UVCoords> _uvCoordsDictionary;
         MeshRenderer _meshRenderer;
         CustomGrid<TileObject> _grid;
-        public void Initalize(CustomGrid<TileObject> grid, Material material) {
+        public void Initialize(CustomGrid<TileObject> grid, Material material) {
             _meshRenderer = GetComponent<MeshRenderer>();
             _grid = grid;
 

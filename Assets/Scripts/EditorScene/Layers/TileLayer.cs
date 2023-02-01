@@ -19,12 +19,17 @@ namespace ProjectEditor {
             _gridList = _grid.GetGridList();
         }
 
+        public override void SetTileIndex(Vector3 worldPosition, int tileIndex) {
+            TileObject tilemapObject = _grid.GetGridObject(worldPosition, EditorMain.CurrentOriginPosition);
+            tilemapObject?.SetIndex(tileIndex);
+        }
+
         public TileLayer(string layerName, int layerIndex, float cellSize)
         : base(layerName, layerIndex) {
             int width = EditorMain.CurrentGridWidth;
             int height = EditorMain.CurrentGridHeight;
             Vector3 origin = EditorMain.CurrentOriginPosition;
-            //TilesetName = TilesetModel.DefaultTilesetName;
+            TilesetName = TilesetModel.DefaultTilesetName;
 
             _grid = new CustomGrid<TileObject>(cellSize, width, height, origin, () => new TileObject());
             _gridList = _grid.GetGridList();
@@ -37,6 +42,10 @@ namespace ProjectEditor {
 
             _grid.ResizeGrid(origin, width, height, originPosition, widthDelta, heightDelta);
             _gridList = _grid.GetGridList();
+        }
+
+        public CustomGrid<TileObject> GetGrid() {
+            return _grid;
         }
     }
 }
