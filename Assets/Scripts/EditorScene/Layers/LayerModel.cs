@@ -7,6 +7,7 @@ namespace ProjectEditor {
         [SerializeField] LayerPicker _layerPicker = null;
         public Dictionary<string, Layer> CurrentLayerDictionary { get; private set;}
         public string SelectedLayerID { get; set; }
+        private OnGridResized _onGridResized;
 
         private void Awake() {
             LoadLayers();
@@ -19,6 +20,8 @@ namespace ProjectEditor {
             EditorMain.CurrentOriginPosition = Vector3.zero;
 
             CurrentLayerDictionary = new Dictionary<string, Layer>();
+
+            _onGridResized?.Invoke();
         }
 
         public void AddLayer(Layer layer) {
@@ -34,6 +37,22 @@ namespace ProjectEditor {
         public void SetTile(Vector3 worldPosition, int tileIndex) {
             if (CurrentLayerDictionary.Count == 0) return;
             CurrentLayerDictionary[SelectedLayerID].SetTileIndex(worldPosition, tileIndex);
+        }
+
+        public void ResizeAllLayers(Vector3 originPosition, int widthDelta, int heightDelta) {
+            EditorMain.CurrentGridWidth += widthDelta;
+            EditorMain.CurrentGridHeight += heightDelta;
+
+            if (widthDelta == 0 && heightDelta == 0) return;
+            foreach (var layer in CurrentLayerDictionary.Values) {
+                layer.ResizeGrid(originPosition, widthDelta, heightDelta);
+            }
+            EditorMain.CurrentOriginPosition = originPosition;
+            _onGridResized?.Invoke();
+        }
+
+        public void SetOnGridResized(OnGridResized onGridResized) {
+            _onGridResized = onGridResized;
         }
 
         public Layer GetSelectedLayer() {

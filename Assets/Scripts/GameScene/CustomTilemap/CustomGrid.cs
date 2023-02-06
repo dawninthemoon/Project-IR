@@ -70,11 +70,15 @@ namespace CustomTilemap {
             bool hChanged = !(Mathf.Abs(currentOriginPosition.y - originPosition.y) < Mathf.Epsilon);
 
             List<List<T>> tempGrid = new List<List<T>>();
+            List<T> nestedList = new List<T>();
             for (int x = 0; x < currentGridWidth; ++x) {
+                nestedList.Clear();
                 for (int y = 0; y < currentGridHeight; ++y) {
-                    tempGrid[x].Add(_createObjectCallback());
+                    nestedList.Add(_createObjectCallback());
                 }
+                tempGrid.Add(nestedList);
             }
+            
             for (int x = 0; x < prevWidth; ++x) {
                 for (int y = 0; y < prevHeight; ++y) {
                     int idx = _gridList[x][y].GetIndex();
@@ -132,12 +136,12 @@ namespace CustomTilemap {
 
         public T GetGridObject(Vector3 worldPosition, Vector3 originPosition) {
             int x, y;
-            GridUtility.GetXY(worldPosition, out x, out y, CellSize, originPosition);
+            GridUtils.GetXY(worldPosition, out x, out y, CellSize, originPosition);
             return GetGridObject(x, y);
         }
 
         public Vector3 GetWorldPosition(int r, int c) {
-            return GridUtility.GetWorldPosition(r, c, CellSize, _originPosition);
+            return GridUtils.GetWorldPosition(c, r, CellSize, _originPosition);
         }
     }
 }
