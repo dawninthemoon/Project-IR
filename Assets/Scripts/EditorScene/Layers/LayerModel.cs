@@ -34,6 +34,11 @@ namespace ProjectEditor {
             _layerPicker.DeleteLayerButton(layerID);
         }
 
+        public void LayerProgress() {
+            if (CurrentLayerDictionary.Count == 0) return;
+            CurrentLayerDictionary[SelectedLayerID].Progress();
+        }
+
         public void SetTile(Vector3 worldPosition, int tileIndex) {
             if (CurrentLayerDictionary.Count == 0) return;
             CurrentLayerDictionary[SelectedLayerID].SetTileIndex(worldPosition, tileIndex);

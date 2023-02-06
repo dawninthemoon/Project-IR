@@ -27,9 +27,9 @@ namespace ProjectEditor {
             SetTilesets(tilesetMaterials, tilesetSprites);
         }
 
-        public void ChangeTileset(string tilesetName, TilemapVisual visual) {
+        public void ChangeTileset(string tilesetName, TilemapVisual visual, CustomGrid<TileObject> grid) {
             Material material = CurrentTilesetMaterials[tilesetName];
-            visual.Initialize(null, material);
+            visual.Initialize(grid, material);
         }
 
         public Material GetMaterialByName(string name) {

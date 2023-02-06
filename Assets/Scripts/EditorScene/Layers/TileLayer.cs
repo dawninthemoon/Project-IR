@@ -9,6 +9,10 @@ namespace ProjectEditor {
         public string TilesetName { get; set; }
         private CustomGrid<TileObject> _grid;
         private TilemapVisual _tilemapVisual;
+        public TilemapVisual  Visual { 
+            get { return _tilemapVisual; }
+            set { _tilemapVisual = value; }
+        }
         private List<List<TileObject>> _gridList;
 
         public TileLayer() {
@@ -46,6 +50,10 @@ namespace ProjectEditor {
 
         public CustomGrid<TileObject> GetGrid() {
             return _grid;
+        }
+
+        public override void Progress() {
+            _tilemapVisual.UpdateHeatMapVisual();
         }
     }
 }

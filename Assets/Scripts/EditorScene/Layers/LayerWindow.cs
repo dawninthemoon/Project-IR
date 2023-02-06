@@ -45,6 +45,7 @@ namespace ProjectEditor {
             Material material = (name != null) ? _tilesetModel.GetMaterialByName(name) : _tilesetModel.GetFirstMaterial();
             tilemapVisual.Initialize(tilemapLayer.GetGrid(), material);
             _tilesetModel.AddTilesetVisual(tilemapVisual);
+            tilemapLayer.Visual = tilemapVisual;
 
             var button = Instantiate(_layerButtonPrefab, _contentTransform);
             button.GetComponentInChildren<Text>().text = tilemapLayer.LayerName;

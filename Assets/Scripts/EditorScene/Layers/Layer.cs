@@ -14,5 +14,6 @@ namespace ProjectEditor {
         }
         public abstract void SetTileIndex(Vector3 worldPosition, int textureIndex);
         public abstract void ResizeGrid(Vector3 originPosition, int widthDelta, int heightDelta);
+        public abstract void Progress();
     }
 }

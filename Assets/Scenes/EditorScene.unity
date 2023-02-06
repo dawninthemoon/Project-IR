@@ -7072,6 +7072,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scrollViewTransform: {fileID: 698285395}
   _buttonPrefab: {fileID: 789616112763734699, guid: 1b26fd92a080942448de773601e5eaad, type: 3}
+  _tilesetPicker: {fileID: 281810523}
+  _tilesetModel: {fileID: 770861941}
 --- !u!1 &1375566480
 GameObject:
   m_ObjectHideFlags: 0

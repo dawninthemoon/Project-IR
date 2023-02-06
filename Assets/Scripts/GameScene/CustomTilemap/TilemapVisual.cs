@@ -99,5 +99,9 @@ namespace CustomTilemap {
             _mesh.uv = uv;
             _mesh.triangles = triangles;
         }
+
+        public string GetTilemapName() {
+            return _meshRenderer.material.mainTexture.name;
+        }
     }
 }

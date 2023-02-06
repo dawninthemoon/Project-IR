@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 namespace ProjectEditor {
     public class LayerPicker : MonoBehaviour {
-        [SerializeField] Transform _scrollViewTransform = null;
-        [SerializeField] Button _buttonPrefab = null;
+        [SerializeField] private Transform _scrollViewTransform = null;
+        [SerializeField] private Button _buttonPrefab = null;
+        [SerializeField] private TilesetPickerWindow _tilesetPicker = null;
+        [SerializeField] private TilesetModel _tilesetModel = null;
         private Image _selectedButtonImage;
         private Dictionary<string, Button> _buttons = new Dictionary<string, Button>();
         private OnTilesetChanged _onTilesetChanged;
@@ -53,12 +55,12 @@ namespace ProjectEditor {
 
         public void ChangeTileset(TileLayer layer) {
             TileLayer tileLayer = layer;
-/*
-            _tilemapPicker.gameObject.SetActive(true);
 
-            if (!tileLayer.Visual.GetTileSetName().Equals(tileLayer.TilesetName)) {
-                _tilesetModel.ChangeTileset(tileLayer.TilesetName, tileLayer.Visual);
-            }*/
+            _tilesetPicker.gameObject.SetActive(true);
+
+            if (!tileLayer.Visual.GetTilemapName().Equals(tileLayer.TilesetName)) {
+                _tilesetModel.ChangeTileset(tileLayer.TilesetName, tileLayer.Visual, tileLayer.GetGrid());
+            }
             _onTilesetChanged(tileLayer);
         }
 

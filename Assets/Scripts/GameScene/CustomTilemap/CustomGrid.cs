@@ -78,7 +78,7 @@ namespace CustomTilemap {
                 }
                 tempGrid.Add(nestedList);
             }
-            
+
             for (int x = 0; x < prevWidth; ++x) {
                 for (int y = 0; y < prevHeight; ++y) {
                     int idx = _gridList[x][y].GetIndex();
@@ -137,7 +137,7 @@ namespace CustomTilemap {
         public T GetGridObject(Vector3 worldPosition, Vector3 originPosition) {
             int x, y;
             GridUtils.GetXY(worldPosition, out x, out y, CellSize, originPosition);
-            return GetGridObject(x, y);
+            return GetGridObject(y, x);
         }
 
         public Vector3 GetWorldPosition(int r, int c) {

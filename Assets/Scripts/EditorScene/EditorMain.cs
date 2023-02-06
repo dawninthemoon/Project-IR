@@ -54,6 +54,10 @@ namespace ProjectEditor {
             }
         }
 
+        private void LateUpdate() {
+            _layerModel.LayerProgress();
+        }
+
         bool CheckMousePositionIsOnUI() {
             return EventSystem.current.IsPointerOverGameObject();
         }
