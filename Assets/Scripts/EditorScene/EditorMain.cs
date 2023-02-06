@@ -21,6 +21,7 @@ namespace ProjectEditor {
         private void Awake() {
             _layerPicker.SetOnTilesetChanged(OnTilesetChanged);
             _tileLayerWindow.SetOnTilesetChanged(OnTilesetChanged);
+            _tilesetPickerWindow.AddOnTilemapPicked((int index) => { _selectedTileIndex = index; });
         }
 
         private void Start() {
