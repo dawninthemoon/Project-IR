@@ -19,6 +19,10 @@ public enum FrameEventType
     FrameEvent_Jump,
     FrameEvent_Effect,
     
+    FrameEvent_SubEntity_SetAction,
+    FrameEvent_SubEntity_SetOffset,
+    FrameEvent_SubEntity_SetParent,
+
     Count,
 }
 
@@ -70,6 +74,116 @@ public abstract class ActionFrameEventBase
             childFrameEventItem._childFrameEvents[i].initialize();
             childFrameEventItem._childFrameEvents[i].onExecute(executeEntity, targetEntity);
         }
+    }
+}
+
+
+public class ActionFrameEvent_SubEntity_SetOffset : ActionFrameEventBase
+{
+    public override FrameEventType getFrameEventType(){return FrameEventType.FrameEvent_SubEntity_SetOffset;}
+
+    private string _subEntityName = "";
+    private Vector3 _value = Vector3.zero;
+
+    public override bool onExecute(GameEntityBase executeEntity, GameEntityBase targetEntity = null)
+    {
+        executeEntity.setSubEntityOffset(_subEntityName, _value);
+
+        return true;
+    }
+
+    public override void loadFromXML(XmlNode node)
+    {
+        XmlAttributeCollection attributes = node.Attributes;
+        for(int i = 0; i < attributes.Count; ++i)
+        {
+            string attrName = attributes[i].Name;
+            string attrValue = attributes[i].Value;
+
+            if(attrName == "EntityName")
+            {
+                _subEntityName = attrValue;
+            }
+            else if(attrName == "Offset")
+            {
+                _value = XMLScriptConverter.valueToVector3(attrValue);
+            }
+
+        }
+
+    }
+}
+
+
+public class ActionFrameEvent_SubEntity_SetParent : ActionFrameEventBase
+{
+    public override FrameEventType getFrameEventType(){return FrameEventType.FrameEvent_SubEntity_SetParent;}
+
+    private string _subEntityName = "";
+    private bool _value = false;
+
+    public override bool onExecute(GameEntityBase executeEntity, GameEntityBase targetEntity = null)
+    {
+        executeEntity.setSubEntityParent(_subEntityName, _value);
+
+        return true;
+    }
+
+    public override void loadFromXML(XmlNode node)
+    {
+        XmlAttributeCollection attributes = node.Attributes;
+        for(int i = 0; i < attributes.Count; ++i)
+        {
+            string attrName = attributes[i].Name;
+            string attrValue = attributes[i].Value;
+
+            if(attrName == "EntityName")
+            {
+                _subEntityName = attrValue;
+            }
+            else if(attrName == "Value")
+            {
+                _value = bool.Parse(attrValue);
+            }
+
+        }
+
+    }
+}
+
+public class ActionFrameEvent_SubEntity_SetAction : ActionFrameEventBase
+{
+    public override FrameEventType getFrameEventType(){return FrameEventType.FrameEvent_SubEntity_SetAction;}
+
+    private string _subEntityName = "";
+    private string _actionName = "";
+
+    public override bool onExecute(GameEntityBase executeEntity, GameEntityBase targetEntity = null)
+    {
+        executeEntity.setSubEntityAction(_subEntityName, _actionName);
+
+        return true;
+    }
+
+    public override void loadFromXML(XmlNode node)
+    {
+        XmlAttributeCollection attributes = node.Attributes;
+        for(int i = 0; i < attributes.Count; ++i)
+        {
+            string attrName = attributes[i].Name;
+            string attrValue = attributes[i].Value;
+
+            if(attrName == "EntityName")
+            {
+                _subEntityName = attrValue;
+            }
+            else if(attrName == "Action")
+            {
+                _actionName = attrValue;
+            }
+
+        }
+
     }
 }
 

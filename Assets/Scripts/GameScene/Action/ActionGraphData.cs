@@ -9,6 +9,8 @@ public class ActionGraphBaseData
     public ActionGraphConditionCompareData[]    _conditionCompareData = null;
     public AnimationPlayDataInfo[]              _animationPlayData = null;
 
+    public ActionGraphSubEntityNodeData[]       _subEntityData = null;
+
     public Dictionary<string, int>             _actionIndexMap = new Dictionary<string, int>();
 
     public int[]                                _defaultBuffList = null;
@@ -19,6 +21,7 @@ public class ActionGraphBaseData
     public int                                  _branchCount = -1;
     public int                                  _conditionCompareDataCount = -1;
     public int                                  _animationPlayDataCount = -1;
+    public int                                  _subEntityDataCount = -1;
 
     public void buildActionIndexMap()
     {
@@ -27,6 +30,17 @@ public class ActionGraphBaseData
             _actionIndexMap.Add(_actionNodeData[i]._nodeName,i);
         }
     }
+}
+
+[System.Serializable]
+public class ActionGraphSubEntityNodeData
+{
+    public string   _name;
+    public string   _actionGraphPath;
+    public string   _aiGraphPath;
+
+    public bool     _attachToParent = false;
+    public UnityEngine.Vector3 _spawnOffset = UnityEngine.Vector3.zero;
 }
 
 [System.Serializable]

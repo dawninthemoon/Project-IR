@@ -579,5 +579,7 @@ public class ActionGraph
     public FlipState getCurrentFlipState() {return _animationPlayer.getCurrentFlipState();}
     public FlipType getCurrentFlipType() {return getCurrentAction()._flipType;}
     public MovementBase.MovementType getCurrentMovement() {return getCurrentAction()._movementType;}
+    public ActionGraphBaseData getBaseDataXXX() {return _actionGraphBaseData;}
+
     private ActionGraphNodeData getCurrentAction() {return _actionGraphBaseData._actionNodeData[_currentActionNodeIndex];}
 }

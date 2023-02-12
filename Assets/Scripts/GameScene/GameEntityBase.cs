@@ -12,6 +12,8 @@ public class GameEntityBase : MonoBehaviour
 
     private MovementControl     _movementControl = new MovementControl();
 
+    private Dictionary<string,GameEntityController> _subEntityDictionary = new Dictionary<string, GameEntityController>();
+
 
     private GameEntityBase      _currentTarget;
 
@@ -33,16 +35,17 @@ public class GameEntityBase : MonoBehaviour
     private bool                _updateDirection = true;
     private bool                _updateFlipType = true;
 
-
     public void Assign()
     {
-        _actionGraph = new ActionGraph(ActionGraphLoader.readFromXML(IOControl.PathForDocumentsFile(actionGraphPath)));
+        _actionGraph = new ActionGraph(ResourceContainerEx.GetInstance().GetActionGraph(actionGraphPath));
         _actionGraph.assign();
 
-        _aiGraph = new AIGraph(_actionGraph, AIGraphLoader.readFromXML(IOControl.PathForDocumentsFile(aiGraphPath)));
+        _aiGraph = new AIGraph(_actionGraph, ResourceContainerEx.GetInstance().GetAIGraph(aiGraphPath));
         _aiGraph.assign();
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        if(_spriteRenderer == null)
+            _spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
     }
 
     public void Initialize()
@@ -50,13 +53,14 @@ public class GameEntityBase : MonoBehaviour
         _actionGraph.initialize();
         _aiGraph.initialize(this);
 
+        createSubEntityFromAction(_actionGraph.getBaseDataXXX());
+
         _movementControl.changeMovement(this,_actionGraph.getCurrentMovement());
         _movementControl.setMoveScale(_actionGraph.getCurrentMoveScale());
     }
 
     public void Progress(float deltaTime)
     {
-
         if(_aiGraph != null)
         {
             _aiGraph.updateConditionData();
@@ -122,6 +126,15 @@ public class GameEntityBase : MonoBehaviour
         }
 
         updateRotation();
+
+        foreach(var item in _subEntityDictionary.Values)
+        {
+            item.setEnable(checkFrameTag(item.getName()));
+            if(item.isEnable() == false)
+                continue;
+
+            item.progress(deltaTime);
+        }
     }
 
 
@@ -347,6 +360,30 @@ public class GameEntityBase : MonoBehaviour
 
     }
 
+    public void createSubEntityFromAction(ActionGraphBaseData actionGraphBaseData)
+    {
+        for(int i = 0; i < actionGraphBaseData._subEntityDataCount; ++i)
+        {
+            ActionGraphSubEntityNodeData subEntityNodeData = actionGraphBaseData._subEntityData[i];
+
+            GameObject subEntityObject = new GameObject(subEntityNodeData._name);
+            subEntityObject.transform.position = transform.position + subEntityNodeData._spawnOffset;
+
+            if(subEntityNodeData._attachToParent)
+                subEntityObject.transform.SetParent(transform);
+            
+            GameEntityBase gameEntityBase = subEntityObject.AddComponent<GameEntityBase>();
+            gameEntityBase.actionGraphPath = subEntityNodeData._actionGraphPath;
+            gameEntityBase.aiGraphPath = subEntityNodeData._aiGraphPath;
+
+            gameEntityBase.Assign();
+            gameEntityBase.Initialize();
+
+            subEntityObject.SetActive(false);
+            _subEntityDictionary.Add(subEntityNodeData._name, new GameEntityController(subEntityNodeData._name, gameEntityBase));
+        }
+    }
+
 
     public FlipState getFlipState() {return _flipState;}
 
@@ -377,6 +414,40 @@ public class GameEntityBase : MonoBehaviour
     {
         return _movementControl != null && _actionGraph != null && _spriteRenderer != null && gameObject.activeInHierarchy;
     }
+
+    public void setSubEntityAction(string subEntityName, string actionName) 
+    {
+        if(_subEntityDictionary.ContainsKey(subEntityName) == false)
+        {
+            DebugUtil.assert(false, "target sub entity is not exists: {0}", subEntityName);
+            return;
+        }
+
+        _subEntityDictionary[subEntityName].changeAction(actionName);
+    }
+
+    public void setSubEntityParent(string subEntityName, bool value) 
+    {
+        if(_subEntityDictionary.ContainsKey(subEntityName) == false)
+        {
+            DebugUtil.assert(false, "target sub entity is not exists: {0}", subEntityName);
+            return;
+        }
+        
+        _subEntityDictionary[subEntityName].setParent(value, transform);
+    }
+
+    public void setSubEntityOffset(string subEntityName, Vector3 value) 
+    {
+        if(_subEntityDictionary.ContainsKey(subEntityName) == false)
+        {
+            DebugUtil.assert(false, "target sub entity is not exists: {0}", subEntityName);
+            return;
+        }
+        
+        _subEntityDictionary[subEntityName].setOffset(value);
+    }
+
 
     public bool applyFrameTag(string tag) {return _actionGraph.applyFrameTag(tag);}
     public void deleteFrameTag(string tag) {_actionGraph.deleteFrameTag(tag);}

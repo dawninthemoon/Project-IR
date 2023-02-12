@@ -633,7 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23a7b8f4ddf7e3d4894ba31e2b2e5a97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionGraphPath: Assets\Data\ActionGraph\TestPlayer.xml
+  actionGraphPath: Assets\Data\ActionGraph\Player\TestPlayer.xml
   aiGraphPath: Assets\Data\AIGraph\EmptyAIGraph.xml
 --- !u!1 &1851692076
 GameObject:

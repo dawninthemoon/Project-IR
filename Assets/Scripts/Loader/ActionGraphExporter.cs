@@ -5,10 +5,10 @@ using System.Text;
 using UnityEngine;
 
 
-public static class ActionGraphLoader
+public class ActionGraphLoader : LoaderBase<ActionGraphBaseData>
 {
     private static Dictionary<string, string> _globalVariables = new Dictionary<string, string>();
-    public static ActionGraphBaseData readFromXML(string path)
+    public override ActionGraphBaseData readFromXML(string path)
     {
         XmlDocument xmlDoc = new XmlDocument();
         try
@@ -52,6 +52,7 @@ public static class ActionGraphLoader
         List<ActionGraphBranchData> branchDataList = new List<ActionGraphBranchData>();
         List<ActionGraphConditionCompareData> compareDataList = new List<ActionGraphConditionCompareData>();
         List<AnimationPlayDataInfo> animationDataList = new List<AnimationPlayDataInfo>();
+        List<ActionGraphSubEntityNodeData> subEntityDataList = new List<ActionGraphSubEntityNodeData>();
 
         _globalVariables.Clear();
         Dictionary<ActionGraphBranchData, string> actionCompareDic = new Dictionary<ActionGraphBranchData, string>();
@@ -76,6 +77,12 @@ public static class ActionGraphLoader
                 readGlobalVariable(nodeList[i], ref _globalVariables);
                 continue;
             }
+            else if(nodeList[i].Name == "SubEntity")
+            {
+                readSubEntity(nodeList[i], ref subEntityDataList);
+                continue;
+            }
+
             
             ActionGraphNodeData nodeData = ReadAction(nodeList[i],defaultFramePerSecond, ref animationDataList, ref actionCompareDic, ref branchDataList,ref compareDataList, in branchSetDic);
             if(nodeData == null)
@@ -125,11 +132,14 @@ public static class ActionGraphLoader
         actionBaseData._branchCount = branchDataList.Count;
         actionBaseData._conditionCompareDataCount = compareDataList.Count;
         actionBaseData._animationPlayDataCount = animationDataList.Count;
+        actionBaseData._subEntityDataCount = subEntityDataList.Count;
 
         actionBaseData._actionNodeData = nodeDataList.ToArray();
         actionBaseData._branchData = branchDataList.ToArray();
         actionBaseData._conditionCompareData = compareDataList.ToArray();
         actionBaseData._animationPlayData = animationDataList.ToArray();
+        actionBaseData._subEntityData = subEntityDataList.ToArray();
+
 
         actionBaseData._actionIndexMap = actionIndexDic;
 
@@ -155,6 +165,41 @@ public static class ActionGraphLoader
         }
 
         targetDic.Add(name,value);
+    }
+
+    private static void readSubEntity(XmlNode node, ref List<ActionGraphSubEntityNodeData> dataList)
+    { 
+        XmlAttributeCollection subEntityAttr = node.Attributes;
+        ActionGraphSubEntityNodeData subEntityNodeData = new ActionGraphSubEntityNodeData();
+
+        for(int attrIndex = 0; attrIndex < subEntityAttr.Count; ++attrIndex)
+        {
+            string targetName = subEntityAttr[attrIndex].Name;
+            string targetValue = subEntityAttr[attrIndex].Value;
+
+            if(targetName == "Name")
+            {
+                subEntityNodeData._name = targetValue;
+            }
+            else if(targetName == "ActionGraphPath")
+            {
+                subEntityNodeData._actionGraphPath = targetValue;
+            }
+            else if(targetName == "AIGraphPath")
+            {
+                subEntityNodeData._aiGraphPath = targetValue;
+            }
+            else if(targetName == "AttachToParent")
+            {
+                subEntityNodeData._attachToParent = bool.Parse(targetValue);
+            }
+            else if(targetName == "SpawnOffset")
+            {
+                subEntityNodeData._spawnOffset = XMLScriptConverter.valueToVector3(targetValue);
+            }
+        }
+
+        dataList.Add(subEntityNodeData);
     }
 
     public static string getGlobalVariable(string value)

@@ -1,0 +1,19 @@
+<ActionGraph Name="GunArm" DefaultAction="GunAim" DefaultFramePerSecond="6">
+
+    <GunAim RotationType="MousePoint" FlipType="MousePoint">
+        <Animation Path="Resources/Sprites/TestPlayer/GunAction/Aiming/Gun" XFlip="true">
+        </Animation>
+
+        <Branch Condition="End" Execute="GunAim"/>
+    </GunAim>
+
+    <GunShot RotationType="Keep" FlipType="Keep">
+        <Animation Path="Resources/Sprites/TestPlayer/GunAction/Shooting/Gun">
+        </Animation>
+
+        <Branch Condition="End" Execute="GunAim"/>
+    </GunShot>
+
+    
+
+</ActionGraph>

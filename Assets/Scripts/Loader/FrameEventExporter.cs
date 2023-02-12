@@ -41,13 +41,19 @@ public static class FrameEventLoader
             outFrameEvent = new ActionFrameEvent_Jump();
         else if(type == "Effect")
             outFrameEvent = new ActionFrameEvent_Effect();
+        else if(type == "SetSubEntityAction")
+            outFrameEvent = new ActionFrameEvent_SubEntity_SetAction();
+        else if(type == "SetSubEntityParent")
+            outFrameEvent = new ActionFrameEvent_SubEntity_SetParent();
+        else if(type == "SetSubEntityOffset")
+            outFrameEvent = new ActionFrameEvent_SubEntity_SetOffset();
         else
         {
             DebugUtil.assert(false, "invalid frameEvent type: {0}",type);
             return null;
         }
 
-        DebugUtil.assert((int)FrameEventType.Count == 14, "check here");
+        DebugUtil.assert((int)FrameEventType.Count == 17, "check here");
 
 
         if(outFrameEvent == null)
