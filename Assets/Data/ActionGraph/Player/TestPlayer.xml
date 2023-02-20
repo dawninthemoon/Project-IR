@@ -12,7 +12,7 @@
     <GlobalVariable Name="gv_normalAttackFriction" Value="300.0"/>
 
     <GlobalVariable Name="gv_AirToLandMaxVelocity" Value="80.0"/>
-
+  <GlobalVariable Name="gv_attackEffectFPS" Value="12"/>
 
     <SubEntity Name="GunArm" ActionGraphPath="Assets\Data\ActionGraph\Player\GunArm.xml" AIGraphPath="Assets\Data\AIGraph\EmptyAIGraph.xml" AttachToParent="True" SpawnOffset="0 18 0"/>
 
@@ -215,7 +215,7 @@
     <AttackCombo_Front_0 MovementType="FrameEvent" DirectionType="MousePointHorizontal" DirectionUpdateOnce="True" FlipType="Direction">
         <Animation Path="Resources/Sprites/TestPlayer/Attack/Ground/Front/0" FramePerSecond="6" XFlip="True">
             <FrameEvent Type="Movement" StartFrame="0" Friction="gv_normalAttackFriction" MaxVelocity="gv_normalAttack1Velocity" Velocity="gv_normalAttack1Velocity" Speed="0"/>
-            <FrameEvent Type="Effect" Path="Resources/Sprites/Effect/AttackTest/0" FramePerSecond="6" Offset="0.0 20.0 0.0" Angle="0.0" UseFlip="True"/>
+            <FrameEvent Type="Effect" Path="Resources/Sprites/Effect/AttackTest/0" FramePerSecond="gv_attackEffectFPS" Offset="0.0 20.0 0.0" Angle="0.0" UseFlip="True"/>
 
             <FrameEvent Type="FrameTag" StartFrame="0.5" EndFrame="2" Tag="AttackCancel"/>
         </Animation>
